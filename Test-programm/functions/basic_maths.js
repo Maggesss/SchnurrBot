@@ -28,21 +28,17 @@ function sleep(milliseconds) {
 
 // === Timer ===
 
-function timerStartStop() {
-    return Date.now()
-}
-
 function getTime(startTime, stopTime) {
-    let Time
-    let Hours
-    let Minutes
-    let Seconds
-    Time = (stopTime - startTime)
+    let Time = 0
+    let Hours = 0
+    let Minutes = 0
+    let Seconds = 0
+    Time = stopTime - startTime
     Hours = Math.floor(Time / 3600000)
     Minutes = Math.floor((Time % 3600000) / 60000)
-    Seconds = Math.floor((Time % 60) / 1000)
-    console.log(`${Hours}:${Minutes}:${Seconds}`)
+    Seconds = Math.floor((Time % 3600000) / 1000)
+    console.log(`${Hours}h:${Minutes}m:${Seconds}s`)
     return
 }
 
-module.exports = { add, subtract, divide, multiply, square, timerStartStop, getTime, sleep}
+module.exports = { add, subtract, divide, multiply, square, getTime, sleep}
