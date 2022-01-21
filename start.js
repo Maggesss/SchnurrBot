@@ -5,7 +5,7 @@ console.log(`Alla ${olo}\n`);
 // Stringlänge
 console.log(olo.length);
 // Buchstabe an Stelle x    funktioniert nur bei vorhandenen Buchstaben, sonst leer
-console.log(olo.charAt(2));
+console.log(olo.charAt(2)); console.log(arrayName.indexOf("olo"));
 // Buchstabe an Stelle x    funktioniert nur bei vorhandenen Buchstaben, sonst undefined
 console.log(olo[3]);
 // Wo ist das erste Zeichen xy im String?
@@ -39,3 +39,22 @@ console.log(int/floatZahl.toExponential())
 console.log(float/intZahl.toPrecision(2))
 //gibt den größten Integer zurück, der kleiner oder gleich der gegeben Nummer ist. (Abrunden) 
 Math.floor(floatZahl)
+// Items in Arrays hinzufügen
+arrayName.push()
+// letztes item entfernen (& Optional in ne Var packen)
+arrayName.pop() 
+// item überschreinen
+arrayName[0] = "olo"
+// entfernen von elementen
+arrayName.spilce(0, 2)
+// hinzufügen von Elementen #2
+arrayName.spilce(1, 0)
+
+// arrays in arrays sind möglich(!)
+let testArray = [
+    "OlO",
+    "olo",
+    ["owo", "owowo"]
+]
+
+console.log(testArray[2][0]) // --> 1. Liste, 3. Item --> Item ist Array --> 2. Liste, 1. Item
