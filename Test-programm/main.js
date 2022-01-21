@@ -1,6 +1,8 @@
 const bm = require("./functions/basic_maths.js");
-let dieHasenmütze = (bm.subtract(70, 1));
 
-dieHasenmütze = dieHasenmütze + "\n"
-
-console.log(dieHasenmütze.toString().repeat(100))
+async function test() {
+    const x = bm.timerStartStop;
+    await bm.sleep(3000);   
+    const y = bm.timerStartStop;
+    bm.getTime(x, y)
+}
