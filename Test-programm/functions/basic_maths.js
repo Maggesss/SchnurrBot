@@ -18,4 +18,4 @@ function square(var1) {
     return var1 * var1
 }
 
-module.exports = { add }
+module.exports = { add, subtract, divide, multiply, square }

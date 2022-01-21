@@ -63,3 +63,6 @@ console.log(testArray[2][0]) // --> 1. Liste, 3. Item --> Item ist Array --> 2. 
 // StrToArray, ArrayToStr
 console.log(testStr.split("WoSollIchSplitten???"))
 console.log(testArray.join("IGwasZwischenDieItemsFürnString"))
+
+
+// ja du stinkerin, mach das                            Naomi war (nicht) hier
