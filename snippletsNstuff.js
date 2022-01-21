@@ -27,6 +27,7 @@ console.log("owo".repeat(3));
 console.log(olo.slice(1, 4));
 // xy Zeichen ab xy abtrennen --> Veraltet
 console.log("Hallololo".substr(2, 2));
+
 // strToInt, strToFloat, intToStr
 console.log(parseInt(strZahl, 10));
 console.log(parseFloat());
@@ -39,6 +40,7 @@ console.log(int/floatZahl.toExponential())
 console.log(float/intZahl.toPrecision(2))
 //gibt den größten Integer zurück, der kleiner oder gleich der gegeben Nummer ist. (Abrunden) 
 Math.floor(floatZahl)
+
 // Items in Arrays hinzufügen
 arrayName.push()
 // letztes item entfernen (& Optional in ne Var packen)
