@@ -52,7 +52,7 @@ arrayName.spilce(0, 2)
 // hinzufügen von Elementen #2
 arrayName.spilce(1, 0)
 
-// arrays in arrays sind möglich(!)
+// arrays in arrays sind möglich(!) = List
 let testArray = [
     "OlO",
     "olo",
