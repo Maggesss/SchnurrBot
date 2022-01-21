@@ -56,5 +56,8 @@ let testArray = [
     "olo",
     ["owo", "owowo"]
 ]
-
 console.log(testArray[2][0]) // --> 1. Liste, 3. Item --> Item ist Array --> 2. Liste, 1. Item
+
+// StrToArray, ArrayToStr
+console.log(testStr.split("WoSollIchSplitten???"))
+console.log(testArray.join("IGwasZwischenDieItemsFürnString"))
