@@ -1,4 +1,5 @@
 const bm = require("./functions/basic_maths.js");
+const axios = require("axios")
 
 async function test() {
     const x = Date.now();
