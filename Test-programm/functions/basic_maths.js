@@ -29,14 +29,21 @@ function sleep(milliseconds) {
 // === Timer ===
 
 function getTime(startTime, stopTime) {
-    let Time = 0
-    let Hours = 0
-    let Minutes = 0
-    let Seconds = 0
     Time = stopTime - startTime
     Hours = Math.floor(Time / 3600000)
     Minutes = Math.floor((Time % 3600000) / 60000)
     Seconds = Math.floor((Time % 3600000) / 1000)
+
+    if (Hours < 10) {
+        Hours =`0${Hours.toString()}`
+    }
+    if (Minutes < 10) {
+        Minutes =`0${Minutes.toString()}`
+    }
+    if (Seconds < 10) {
+        Seconds =`0${Seconds.toString()}`
+    }
+
     console.log(`${Hours}h:${Minutes}m:${Seconds}s`)
     return
 }
