@@ -11,7 +11,7 @@ const helpEmbed = new MessageEmbed()
 		{ name: "ping", value: "Play some pingpong w/the Bot!" },
 		{ name: "pp", value: "Gets you a penis! You\'r a female? DOESN\'T MATTER, PENIS!"},
 		{ name: "clear", value: "Clears some messages, choose from 1 to 99!"},
-        { name: "serverinfo", value: "Returns some info about the server you\'r currently visiting!"}
+        { name: "serverinfo", value: "Returns some info about the server you\"r currently visiting!"}
 	)
 	.setTimestamp()
 	.setFooter({ text: "©2022 Magges" });
