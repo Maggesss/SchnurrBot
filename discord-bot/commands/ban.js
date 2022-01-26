@@ -17,16 +17,15 @@ module.exports = {
             .setName("banreason")
             .setDescription("The banreason")
             .setRequired(true)),
+            
     async execute(interaction) {
         try {
-            if (interaction.client.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
-                console.log('This member can kick');
-            
+            if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
                 const user = interaction.options.getMember("target");
                 const deleteDays = interaction.options.getNumber("days")
                 const banreason = interaction.options.getString("banreason")
-                user.ban({ days: deleteDays, reason: banreason })
-                console.log(`${interaction.client} banned: ${user.username} on server: ${interaction.guild.name}`)
+                await user.ban({ days: deleteDays, reason: banreason })
+                console.log(`${interaction.member} banned: ${user.username} on server: ${interaction.guild.name}`)
                 return interaction.reply({ content: `You banned: ${user.username}`, ephemeral: true })}
             else {
                 return interaction.reply("You don't have permissions to do that!")

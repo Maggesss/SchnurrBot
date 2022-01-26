@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { Permissions } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,11 +11,10 @@ module.exports = {
             .setRequired(true)),
 	async execute(interaction) {
         try {
-            if (interaction.client.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
-                console.log('This member can kick');
+            if (interaction.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
                 const user = interaction.options.getMember("target");
-                user.kick()
-                console.log(`${interaction.client} kicked: ${user.username} on server: ${interaction.guild.name}`)
+                await user.kick()
+                console.log(`${interaction.member.username} kicked: ${user.username} on server: ${interaction.guild.name}`)
 		        return interaction.reply({ content: `You kicked: ${user.username}`, ephemeral: true })}
             else {
                 return interaction.reply("You don't have permissions to do that!")
