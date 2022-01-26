@@ -10,10 +10,15 @@ module.exports = {
             .setRequired(true)),
 	async execute(interaction) {
         try {
-            const user = interaction.options.getMember("target");
-            user.kick()
-            console.log(`${interaction.client} kicked: ${user.username} on server: ${interaction.guild.name}`)
-		    return interaction.reply({ content: `You kicked: ${user.username}`, ephemeral: true });
+            if (interaction.client.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
+                console.log('This member can kick');
+                const user = interaction.options.getMember("target");
+                user.kick()
+                console.log(`${interaction.client} kicked: ${user.username} on server: ${interaction.guild.name}`)
+		        return interaction.reply({ content: `You kicked: ${user.username}`, ephemeral: true })}
+            else {
+                return interaction.reply("You don't have permissions to do that!")
+            }
         } catch (error) {
             console.error(error);
             return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });

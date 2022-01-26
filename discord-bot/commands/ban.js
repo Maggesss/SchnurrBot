@@ -19,12 +19,18 @@ module.exports = {
             .setRequired(true)),
     async execute(interaction) {
         try {
-            const user = interaction.options.getMember("target");
-            const deleteDays = interaction.options.getNumber("days")
-            const banreason = interaction.options.getString("banreason")
-            user.ban({ days: deleteDays, reason: banreason })
-            console.log(`${interaction.client} banned: ${user.username} on server: ${interaction.guild.name}`)
-            return interaction.reply({ content: `You banned: ${user.username}`, ephemeral: true });
+            if (interaction.client.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+                console.log('This member can kick');
+            
+                const user = interaction.options.getMember("target");
+                const deleteDays = interaction.options.getNumber("days")
+                const banreason = interaction.options.getString("banreason")
+                user.ban({ days: deleteDays, reason: banreason })
+                console.log(`${interaction.client} banned: ${user.username} on server: ${interaction.guild.name}`)
+                return interaction.reply({ content: `You banned: ${user.username}`, ephemeral: true })}
+            else {
+                return interaction.reply("You don't have permissions to do that!")
+            }
         } catch (error) {
             console.error(error);
             return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
