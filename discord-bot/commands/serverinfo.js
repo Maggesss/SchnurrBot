@@ -1,9 +1,9 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('server')
-		.setDescription('Gives you some information about this server.'),
+		.setName("server")
+		.setDescription("Gives you some information about this server."),
 	async execute(interaction) {
 		await interaction.reply(`Server name: ${interaction.guild.name}\n
 								Total members: ${interaction.guild.memberCount}`);
