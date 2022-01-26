@@ -1,4 +1,4 @@
-const { SlashCommandBuilder } = require('@discordjs/builders');
+const { SlashCommandBuilder } = require("@discordjs/builders");
 
 function randomPP() {
     let x = Math.floor(Math.random() * 11);
@@ -10,8 +10,8 @@ function randomPP() {
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName('pp')
-		.setDescription('Replies your pp lengh!'),
+		.setName("pp")
+		.setDescription("Replies your pp lengh!"),
 	async execute(interaction) {
 		await interaction.reply(randomPP());
 	},
