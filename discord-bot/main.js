@@ -14,7 +14,7 @@ for (const file of commandFiles) {
 
 client.once('ready', () => {
 	console.log('Ready!');
-    const Guilds = client.guilds.cache.map(guild => guild.name);
+    const Guilds = client.guilds.cache.map(guild => `${guild.id}: ${guild.name}`);
     console.log(Guilds);
 });
 
