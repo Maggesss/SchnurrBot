@@ -8,9 +8,9 @@ module.exports = {
     async execute(interaction) {
         try {
             const guild = interaction.guild.guildId
-            const member = interaction.guild.members.cache.get(interaction.member.user.id);
+            const member = interaction.guild.members.cache.get(interaction.user.id);
             const voiceChannel = member.voice.channel;
-            const connection = joinVoiceChannel({
+            joinVoiceChannel({
                 channelId: voiceChannel,
                 guildId: guild,
                 adapterCreator: guild.voiceAdapterCreator,

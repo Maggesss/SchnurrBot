@@ -25,7 +25,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setColor("#0099ff")
-            .setAuthor({ name: author, value: interaction.user.displayAvatarURL })
+            .setAuthor({ name: author, url: interaction.user.displayAvatarURL })
             .setDescription(`${interaction.user.tag} has suggested a(n): ${type}`)
             .addFields(
                 { name: "Name:", value: name },
@@ -33,9 +33,11 @@ module.exports = {
             )
             .setTimestamp()
             .setFooter({ text: "©2022 Magges" });
-            return interaction.channel.send({ embeds: [embed] }).then(sentMessage => {
+            interaction.reply("New suggestion!")
+            interaction.channel.send({ embeds: [embed] }).then(sentMessage => {
                 sentMessage.react("✅");
                 sentMessage.react("❌");
+            return
             });
 	},
 };
