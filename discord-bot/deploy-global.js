@@ -21,14 +21,14 @@ for (const dir of commandFolders){
 }
 
 client.login(token);
-
 const rest = new REST({ version: "9" }).setToken(token);
 
 client.once("ready", () => {
 	const Guilds = client.guilds.cache.map(guild => `${guild.id}`)
 
-	for (const x in Guilds){
+	for (const x of Guilds){
 		rest.put(Routes.applicationGuildCommands(clientId, x), { body: commands })
-			.then(() => console.log("Successfully registered application commands."))
+			.then(() => console.log(`Successfully registered application commands for guildID: ${x}`))
 			.catch(console.error);}
+	client.destroy()
 });

@@ -8,15 +8,14 @@ module.exports = {
     async execute(interaction) {
         try {
             const guild = interaction.guild.guildId
-            const member = interaction.guild.members.cache.get(interaction.user.id);
-            const voiceChannel = member.voice.channel;
+            const voiceChannel = interaction.client.voice.channel;
             joinVoiceChannel({
                 channelId: voiceChannel,
                 guildId: guild,
-                adapterCreator: guild.voiceAdapterCreator,
+                adapterCreator: interaction.guild.voiceAdapterCreator,
             });
-            console.log(`${interaction.client} summoned me to: ${channel.name} on server: ${interaction.guild.name}`)
-            return interaction.reply({ content: `You banned: ${user.username}`, ephemeral: true })
+            console.log(`${interaction.client} summoned me to: ${voiceChannel} on server: ${interaction.guild.name}`)
+            return interaction.reply({ content: `Joined your channel.`, ephemeral: true })
         } catch (error) {
             console.error(error);
             return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
