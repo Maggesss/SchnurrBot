@@ -20,8 +20,6 @@ module.exports = {
     async execute(interaction) {
         try {
             if (interaction.client.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
-                console.log('This member can kick');
-            
                 const user = interaction.options.getMember("target");
                 const deleteDays = interaction.options.getNumber("days")
                 const banreason = interaction.options.getString("banreason")

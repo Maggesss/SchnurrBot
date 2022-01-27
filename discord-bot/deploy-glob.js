@@ -4,11 +4,17 @@ const { Routes } = require("discord-api-types/v9");
 const { clientId, guildId, token } = require("./config.json");
 
 const commands = [];
-const commandFiles = fs.readdirSync("./commands/global-mod").filter(file => file.endsWith(".js"));
+const commandFolders = fs.readdirSync("./commands")
 
-for (const file of commandFiles) {
-	const command = require(`./commands/global-mod/${file}`);
-	commands.push(command.data.toJSON());
+for (const dir of commandFolders){
+	if (dir.startsWith("glob") == true){
+		const commandFiles = fs.readdirSync(`./commands/${dir}`).filter(file => file.endsWith(".js"));
+
+		for (const file of commandFiles) {
+			const command = require(`./commands/${dir}/${file}`);
+		commands.push(command.data.toJSON());
+		}
+	}
 }
 
 const rest = new REST({ version: "9" }).setToken(token);
