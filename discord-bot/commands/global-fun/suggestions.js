@@ -33,10 +33,9 @@ module.exports = {
             )
             .setTimestamp()
             .setFooter({ text: "©2022 Magges" });
-            await interaction.channel.send({ embeds: [embed] }).then(sentMessage => {
+            return interaction.channel.send({ embeds: [embed] }).then(sentMessage => {
                 sentMessage.react("✅");
                 sentMessage.react("❌");
-                return
             });
 	},
 };
