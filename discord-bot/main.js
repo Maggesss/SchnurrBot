@@ -19,9 +19,13 @@ for (const dir of commandFolders){
 }
 
 client.once("ready", () => {
+	let counter = 0
 	console.log("Ready!");
     const Guilds = client.guilds.cache.map(guild => `${guild.id}: ${guild.name}`);
     console.log(Guilds);
+	for (x in Guilds) {
+		counter = counter + 1}
+	console.log(`\nBot is currently in ${counter} guilds.`)
 });
 
 client.on("interactionCreate", async interaction => {

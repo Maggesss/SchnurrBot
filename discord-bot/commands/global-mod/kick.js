@@ -13,7 +13,7 @@ module.exports = {
         try {
             if (interaction.client.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
                 const user = interaction.options.getMember("target");
-                
+                user.kick()
                 console.log(`${interaction.client} kicked: ${user.username} on server: ${interaction.guild.name}`)
 		        return interaction.reply({ content: `You kicked: ${user.username}`, ephemeral: true })}
             else {

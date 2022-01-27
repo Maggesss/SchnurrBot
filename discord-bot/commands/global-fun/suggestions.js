@@ -33,7 +33,7 @@ module.exports = {
             )
             .setTimestamp()
             .setFooter({ text: "©2022 Magges" });
-            interaction.reply("New suggestion!")
+            interaction.reply({ content: `Suggestion sent.`, ephemeral: true})
             interaction.channel.send({ embeds: [embed] }).then(sentMessage => {
                 sentMessage.react("✅");
                 sentMessage.react("❌");
