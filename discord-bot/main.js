@@ -1,21 +1,31 @@
 const fs = require("fs");
-const { Client, Collection, Intents } = require("discord.js");
 const { token } = require("./config.json");
+const { Client, Collection, Intents } = require("discord.js");
 
-const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
 
 client.commands = new Collection();
-const commandFiles = fs.readdirSync("./commands").filter(file => file.endsWith(".js"));
 
-for (const file of commandFiles) {
-	const command = require(`./commands/${file}`);
-	client.commands.set(command.data.name, command);
+const commandFolders = fs.readdirSync("./commands")
+
+for (const dir of commandFolders){
+
+	const commandFiles = fs.readdirSync(`./commands/${dir}`).filter(file => file.endsWith(".js"));
+
+	for (const file of commandFiles) {
+		const command = require(`./commands/${dir}/${file}`);
+		client.commands.set(command.data.name, command);
+	}
 }
 
 client.once("ready", () => {
+	let counter = 0
 	console.log("Ready!");
     const Guilds = client.guilds.cache.map(guild => `${guild.id}: ${guild.name}`);
     console.log(Guilds);
+	for (x in Guilds) {
+		counter = counter + 1}
+	console.log(`\nBot is currently in ${counter} guilds.`)
 });
 
 client.on("interactionCreate", async interaction => {

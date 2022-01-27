@@ -1,0 +1,14 @@
+const { SlashCommandBuilder } = require("@discordjs/builders");
+const { Client, Intents } = require("discord.js");
+
+const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName("ping")
+		.setDescription("Replies with Pong!"),
+	async execute(interaction) {
+		const sent = await interaction.reply({ content: 'Pinging...', fetchReply: true });
+		interaction.editReply(`Roundtrip latency: ${sent.createdTimestamp - interaction.createdTimestamp}ms`);
+	},
+};
