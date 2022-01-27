@@ -19,23 +19,24 @@ module.exports = {
             .setRequired(true)),
 	async execute(interaction) {
 		const type = interaction.options.getString("type");
-        const sgName = interaction.options.getString("name");
+        const name = interaction.options.getString("name");
         const suggestion = interaction.options.getString("suggestion");
-        const author = interaction.client.name
+        const author = interaction.user.tag
 
         const embed = new MessageEmbed()
             .setColor("#0099ff")
-            .setAuthor(author, interaction.client.displayAvatarURL)
-            .setDescription(`${interaction.client} has suggested a(n): ${type}`)
+            .setAuthor({ name: author, value: interaction.user.displayAvatarURL })
+            .setDescription(`${interaction.user.tag} has suggested a(n): ${type}`)
             .addFields(
-                { name: "Name:", value: sgName },
+                { name: "Name:", value: name },
                 { name: "Suggestion:", value: suggestion},
             )
             .setTimestamp()
             .setFooter({ text: "©2022 Magges" });
-            const message = await interaction.reply({ embeds: [embed], fetchReply: true });
-            message.react("✅")
-            message.react("❌")
-            return
+            await interaction.channel.send({ embeds: [embed] }).then(sentMessage => {
+                sentMessage.react("✅");
+                sentMessage.react("❌");
+                return
+            });
 	},
 };
