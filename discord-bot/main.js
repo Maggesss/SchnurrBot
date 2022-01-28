@@ -33,7 +33,7 @@ client.once("ready", () => {
 client.on("interactionCreate", async interaction => {
 	if (!interaction.isCommand()) return;
 
-	fs.writeFileSync(path.resolve('./data/user/' + interaction.user.id + '.json'), new User({ id: interaction.user.id}).toString())
+	fs.writeFileSync(path.resolve('./data/user/' + interaction.user.id + '.json'), new User({ id: interaction.user.id, name: interaction.user.tag}).toString())
 
 	const command = client.commands.get(interaction.commandName);
 
@@ -49,7 +49,7 @@ client.on("interactionCreate", async interaction => {
 
 client.on('messageCreate', (message) => {
 
-	fs.writeFileSync(path.resolve('./data/user/' + message.author.id + '.json'), new User({ id: message.author.id}).toString())
+	fs.writeFileSync(path.resolve('./data/user/' + message.author.id + '.json'), new User({ id: message.author.id, name: message.author.tag}).toString())
 
     if (message.author.bot) {return};
 

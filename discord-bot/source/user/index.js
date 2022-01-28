@@ -19,7 +19,7 @@ class User {
         /**
          * @type {String}
          */
-        this.name = data.namen; if(!this.namen) { this.namen = "None" }
+        this.name = data.name; if(!this.name) { this.name = "None" }
         
     }
     /**
