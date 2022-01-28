@@ -15,7 +15,8 @@ module.exports = {
         try {
             if(fs.existsSync(path.resolve('./data/user/' + interaction.user.id + '.json'))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve('./data/user/' + interaction.user.id + '.json')))); 
                 if (user.afk == false) {
-                    const reason = interaction.options.get("reason")
+                    const reason =  JSON. stringify(interaction.options.get("reason"))
+                    console.log(reason)
                     fs.writeFileSync(path.resolve('./data/user/' + interaction.user.id + '.json'), new User({ id: interaction.user.id, afk: true, reason: reason}).toString())
                     return interaction.reply("You are now AFK.")
                 }
