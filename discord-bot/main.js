@@ -1,6 +1,8 @@
 const fs = require("fs");
 const { token } = require("./config.json");
 const { Client, Collection, MessageEmbed } = require("discord.js");
+const path = require("path")
+const User = require('./source/user/index')
 
 const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS"], partials: ["CHANNEL"]});
 
@@ -31,6 +33,8 @@ client.once("ready", () => {
 client.on("interactionCreate", async interaction => {
 	if (!interaction.isCommand()) return;
 
+	fs.writeFileSync(path.resolve('./data/user/' + interaction.user.id + '.json'), new User({ id: interaction.user.id }).toString())
+
 	const command = client.commands.get(interaction.commandName);
 
 	if (!command) return;
@@ -44,6 +48,8 @@ client.on("interactionCreate", async interaction => {
 });
 
 client.on('messageCreate', (message) => {
+
+	fs.writeFileSync(path.resolve('./data/user/' + message.author.id + '.json'), new User({ id: message.author.id }).toString())
 
     if (message.author.bot) return;
 
@@ -63,12 +69,12 @@ client.on('messageCreate', (message) => {
             channel.send({ embeds: [dmLogEmbed] })
         })
     }
-	// else if (message.mentions.members.first()){																			Nerviger Weg für AFK responses, danke, Lin... xD
-	// 	const person = message.guild.members.cache.get(message.mentions.members.first().user.id);
-	// 	if (person.presence.status == "idle"){
-	// 		message.channel.send("This user is currently AFK, there is no point in mentioning him/her...")
-	// 	}
-	// }
+	else if (message.mentions.members.first()){
+	if(fs.existsSync(path.resolve('./data/user/' + message.author.id + '.json'))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve('./data/user/' + message.author.id + '.json')))); 
+		if (user.afk == true) {
+			message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)}
+	}
+	}
 });
 
 client.login(token);
