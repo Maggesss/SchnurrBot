@@ -63,7 +63,7 @@ client.on('messageCreate', (message) => {
             channel.send({ embeds: [dmLogEmbed] })
         })
     }
-	// else if (message.mentions.members.first()){																			Nerviger Weg für AFK responses, danke, Lin...
+	// else if (message.mentions.members.first()){																			Nerviger Weg für AFK responses, danke, Lin... xD
 	// 	const person = message.guild.members.cache.get(message.mentions.members.first().user.id);
 	// 	if (person.presence.status == "idle"){
 	// 		message.channel.send("This user is currently AFK, there is no point in mentioning him/her...")
