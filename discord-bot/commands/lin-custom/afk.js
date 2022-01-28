@@ -11,15 +11,18 @@ module.exports = {
             .setRequired(false)),
 	async execute(interaction) {
         try {
-            if (){
-                const user = {
-                    "id" : interaction.member.id,
-                    "afk" : yes
-                }
-            }
-            else {
-                return interaction.member.setNickname(interaction.member.displayName.slice(0, -5))
-            }
+            const afkPath = "./commands/lin-custom/afk.json"
+            const afkRead = fs.readFileSync(afkPath);
+            const afkFile = JSON.parse(afkRead);
+            const userId = interaction.client.id;
+            if (!afkFile[userId]) {
+                afkFile[userId] = {afk: true};
+                fs.writeFileSync(afkPath, JSON.stringify(afkFile, null, 2));
+            } else {
+                var afkVar = Boolean(true)
+                afkFile[userId] = {afk: afkVar};
+                fs.writeFileSync(afkPath, JSON.stringify(afkFile, null, 2));
+                        }
         } catch (error) {
             console.error(error);
             return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
