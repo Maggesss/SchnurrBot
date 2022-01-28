@@ -14,7 +14,7 @@ module.exports = {
                 guildId: guild,
                 adapterCreator: interaction.guild.voiceAdapterCreator,
             });
-            console.log(`${interaction.client} summoned me to: ${voiceChannel} on server: ${interaction.guild.name}`)
+            console.log(`${interaction.client.name} summoned me to: ${voiceChannel} on server: ${interaction.guild.name}`)
             return interaction.reply({ content: `Joined your channel.`, ephemeral: true })
         } catch (error) {
             console.error(error);
