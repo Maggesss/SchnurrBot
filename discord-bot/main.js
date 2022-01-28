@@ -70,10 +70,10 @@ client.on('messageCreate', (message) => {
         })
     }
 	else if (message.mentions.members.first()){
-	if(fs.existsSync(path.resolve('./data/user/' + message.author.id + '.json'))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve('./data/user/' + message.author.id + '.json')))); 
-		if (user.afk == true) {
-			message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)}
-	}
+		if(fs.existsSync(path.resolve('./data/user/' + message.mentions.members.first().id + '.json'))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve('./data/user/' + message.mentions.members.first().id + '.json')))); 
+			if (user.afk == true) {
+				message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)}
+		}
 	}
 });
 
