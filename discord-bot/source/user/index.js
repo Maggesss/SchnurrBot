@@ -16,6 +16,11 @@ class User {
          * @type {String}
          */
         this.reason = data.reason; if(!this.reason) { this.reason = "None" }
+        /**
+         * @type {String}
+         */
+        this.name = data.name
+        if(!this.name || typeof(this.name) != "string") { throw Error("Invalid name: Pass a valid name object") }
     }
     /**
      * @returns {String}
