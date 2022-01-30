@@ -25,7 +25,7 @@ module.exports = {
 
         const embed = new MessageEmbed()
             .setColor("#0099ff")
-            .setAuthor({ name: author, url: interaction.user.displayAvatarURL() })
+            .setAuthor({ name: author, iconURL: interaction.user.displayAvatarURL() })
             .setDescription(`${author} has suggested a(n): ${type}`)
             .addFields(
                 { name: "Name:", value: name },

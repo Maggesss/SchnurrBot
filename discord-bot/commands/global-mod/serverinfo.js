@@ -8,7 +8,7 @@ module.exports = {
 	async execute(interaction) {
 		const embed = new MessageEmbed()
 			.setColor("#0099ff")
-			.setAuthor({ name: interaction.guild.name, url: interaction.guild.iconURL() })
+			.setAuthor({ name: interaction.guild.name, iconURL: interaction.guild.iconURL() })
 			.addFields(
 				{ name: "Owner:", value: `<@${interaction.guild.ownerId}>`, inline: true},
 				{ name: "Voice Channels:", value: (interaction.guild.channels.cache.filter((c) => c.type === "GUILD_VOICE").size).toString(), inline: true },
