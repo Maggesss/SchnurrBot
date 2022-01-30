@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
 const fs = require("fs")
 const path = require("path")
-const Server = require("C:/Users/mbjki/praktikum-vario/praktikum-vario-js/discord-bot/source/server/index.js")
+const Server = require("C:/Users/mbjki/praktikum-vario/praktikum-vario-js/discord-bot/source/server/index")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -43,7 +43,7 @@ module.exports = {
                     sentMessage.react("✅");
                     sentMessage.react("❌");
                 return interaction.reply({ content: `Suggestion sent.`, ephemeral: true})
-            })} else {client.channels.cache.get(server.suggestionChannelID).send({ embeds: [embed] }).then(sentMessage => {
+            })} else {interaction.client.channels.cache.get(server.suggestionChannelID).send({ embeds: [embed] }).then(sentMessage => {
                 sentMessage.react("✅");
                 sentMessage.react("❌");
                 return interaction.reply({ content: `Suggestion sent.`, ephemeral: true})})}
