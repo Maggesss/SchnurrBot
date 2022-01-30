@@ -1,5 +1,8 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
+const fs = require("fs")
+const path = require("path")
+const Server = require("C:/Users/mbjki/praktikum-vario/praktikum-vario-js/discord-bot/source/server/index.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -33,10 +36,17 @@ module.exports = {
             )
             .setTimestamp()
             .setFooter({ text: "©2022 Magges" });
-            interaction.channel.send({ embeds: [embed] }).then(sentMessage => {
+        if (fs.existsSync(path.resolve('./data/server/' + interaction.guild.id + '.json'))) 
+            { const server = new Server(JSON.parse(fs.readFileSync(path.resolve('./data/server/' + interaction.guild.id + '.json'))))
+            if (server.suggestionChannelID == "None") {
+                interaction.channel.send({ embeds: [embed] }).then(sentMessage => {
+                    sentMessage.react("✅");
+                    sentMessage.react("❌");
+                return interaction.reply({ content: `Suggestion sent.`, ephemeral: true})
+            })} else {client.channels.cache.get(server.suggestionChannelID).send({ embeds: [embed] }).then(sentMessage => {
                 sentMessage.react("✅");
                 sentMessage.react("❌");
-            return interaction.reply({ content: `Suggestion sent.`, ephemeral: true})
-            });
+                return interaction.reply({ content: `Suggestion sent.`, ephemeral: true})})}
+        };
 	},
 };
