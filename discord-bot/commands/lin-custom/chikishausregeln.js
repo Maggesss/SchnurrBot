@@ -11,7 +11,7 @@ module.exports = {
             .setRequired(true)),
         
 	async execute(interaction) {
-        const regelNum = interaction.options.getString("regelNR")
+        const regelNum = interaction.options.getString("regelnummer")
         let Hausregel = ""
         if (regelNum == 1) {Hausregel = "Das Schwängern oder Schwanger werden vor dem Alter von 18 Jahren ist in diesem Haushalt untersagt! Ab dem erhalten der Volljährigkeit geht mir das am Arsch vorbei tbh."}
         else if (regelNum == "2") {Hausregel = "Es ist mir lieber, wenn ihr illegales zuhause macht. Außerhalb der eigenen vier Wände können viele Unfälle passieren."}
