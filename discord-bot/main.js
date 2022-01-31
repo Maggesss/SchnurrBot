@@ -55,9 +55,7 @@ client.on("interactionCreate", async interaction => {
 
 client.on('messageCreate', (message) => {
 
-	if(!fs.existsSync(path.resolve(`./data/user/${message.author.id}.json`))) {
-		fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag}).toString())
-	}
+	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag}).toString())
 	if(!fs.existsSync(path.resolve(`./data/server/${message.guild.id}.json`))) {
 		fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}.json`), new Server({ id: message.guild.id, name: message.guild.name}).toString())
 	}
