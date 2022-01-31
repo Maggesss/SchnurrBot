@@ -2,6 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const fs = require("fs")
 const path = require("path")
 const Server = require("C:/Users/mbjki/praktikum-vario/praktikum-vario-js/discord-bot/source/server/index")
+const { Permissions } = require('discord.js');
 
 module.exports = {
 	data: new SlashCommandBuilder()
