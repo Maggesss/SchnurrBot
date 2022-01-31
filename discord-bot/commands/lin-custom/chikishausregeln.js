@@ -26,12 +26,12 @@ module.exports = {
 
 		const embed = new MessageEmbed()
 			.setColor("#0099ff")
-			.setAuthor({ name: "<@669240426867327006>" })
+			.setDescription("<@669240426867327006>")
 			.addFields(
 				{ name: `Hausregel #${regelNum}`, value: Hausregel },
 			)
-			.setFooter({ text: `ID: ${interaction.guild.id} | Server Created` })
-			.setTimestamp(interaction.guild.createdTimestamp);
+			.setFooter({ text: "©2022 Chiki" })
+			.setTimestamp();
 		return interaction.reply({ embeds: [embed] })
 	},
 };
