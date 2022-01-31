@@ -24,7 +24,7 @@ module.exports = {
 		const type = interaction.options.getString("type");
         const name = interaction.options.getString("name");
         const suggestion = interaction.options.getString("suggestion");
-        const author = interaction.user.tag
+        const author = interaction.user.id
 
         const embed = new MessageEmbed()
             .setColor("#0099ff")
