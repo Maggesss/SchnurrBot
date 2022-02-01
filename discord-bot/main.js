@@ -71,7 +71,7 @@ client.on('messageCreate', (message) => {
             dmLogEmbed.setImage(attachment.url)
         }
         client.channels.fetch("936549224898764800").then((channel) => {
-            channel.send({ embeds: [dmLogEmbed] })
+            return channel.send({ embeds: [dmLogEmbed] })
         })
     }
 	else if (message.mentions.members.first()){
@@ -79,7 +79,7 @@ client.on('messageCreate', (message) => {
 			if (user.afk == true) {
 				message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)}
 		}}
-	if(!fs.existsSync(path.resolve(`./data/server/${message.guild.id}.json`))) {
+	else if(!fs.existsSync(path.resolve(`./data/server/${message.guild.id}.json`))) {
 		fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}.json`), new Server({ id: message.guild.id, name: message.guild.name}).toString())
 	}
 });
