@@ -55,16 +55,12 @@ client.on("interactionCreate", async interaction => {
 
 client.on('messageCreate', (message) => {
 
-	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag}).toString())
-	if(!fs.existsSync(path.resolve(`./data/server/${message.guild.id}.json`))) {
-		fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}.json`), new Server({ id: message.guild.id, name: message.guild.name}).toString())
-	}
-
     if (message.author.bot) {return};
 
     const attachment = message.attachments.first()
 
     if (message.channel.type === 'DM') {
+		fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag}).toString())
         const dmLogEmbed = new MessageEmbed()
             .setColor("RANDOM")
             .setTitle(`${message.author.tag} dmed the bot and said: `)
@@ -82,7 +78,9 @@ client.on('messageCreate', (message) => {
 		if(fs.existsSync(path.resolve('./data/user/' + message.mentions.members.first().id + '.json'))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve('./data/user/' + message.mentions.members.first().id + '.json')))); 
 			if (user.afk == true) {
 				message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)}
-		}
+		}}
+	if(!fs.existsSync(path.resolve(`./data/server/${message.guild.id}.json`))) {
+		fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}.json`), new Server({ id: message.guild.id, name: message.guild.name}).toString())
 	}
 });
 
