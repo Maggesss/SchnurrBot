@@ -17,7 +17,7 @@ module.exports = {
         try { 
             if (choice_user.toLowerCase() == ("rock" || "paper" || "scissors")) {
                 if (((choice_user.toLowerCase() == "rock") && (choice_bot == 1)) || ((choice_user.toLowerCase()) == "paper" && (choice_bot == 2)) || ((choice_user.toLowerCase()) == "scissors" && (choice_bot == 3))) {
-                    return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot did the same! **Tie!**`)
+                    return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot chose the same! **Tie!**`)
                 } else if (((choice_user.toLowerCase() == "rock") && (choice_bot == 3)) || ((choice_user.toLowerCase() == "paper") && (choice_bot == 1)) || ((choice_user.toLowerCase() == "scissors") && (choice_bot == 2))) {
                     return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot misspredicted! **You win!**`)
                 } else if (((choice_user.toLowerCase() == "rock") && (choice_bot == 2)) || ((choice_user.toLowerCase() == "paper") && (choice_bot == 3)) || ((choice_user.toLowerCase() == "scissors") && (choice_bot == 1))) {
