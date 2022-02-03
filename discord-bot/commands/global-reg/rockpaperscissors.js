@@ -18,11 +18,11 @@ module.exports = {
         try { 
             if (choice_user.toLowerCase() == ("rock" || "paper" || "scissors")) {
                 if ((choice_user.toLowerCase() && choice_array[choice_bot]) == ("rock" || "paper" || "scissors")) {
-                    return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot chose ${choice_array[choice_bot]}! **Tie!**`)
+                    return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot chose **${choice_array[choice_bot]}**! **Tie!**`)
                 } else if (((choice_user.toLowerCase() == "rock") && (choice_bot == 3)) || ((choice_user.toLowerCase() == "paper") && (choice_bot == 1)) || ((choice_user.toLowerCase() == "scissors") && (choice_bot == 2))) {
-                    return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot chose ${choice_array[choice_bot]}! **You win!**`)
+                    return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot chose **${choice_array[choice_bot]}**! **You win!**`)
                 } else if (((choice_user.toLowerCase() == "rock") && (choice_bot == 2)) || ((choice_user.toLowerCase() == "paper") && (choice_bot == 3)) || ((choice_user.toLowerCase() == "scissors") && (choice_bot == 1))) {
-                    return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot chose ${choice_array[choice_bot]}! **You lose!**`)
+                    return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot chose **${choice_array[choice_bot]}**! **You lose!**`)
                 }
             } else { return interaction.reply({ content: "Not a valid input!", ephemeral: true }) }
 
