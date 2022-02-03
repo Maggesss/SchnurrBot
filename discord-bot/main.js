@@ -28,7 +28,7 @@ client.once("ready", () => {
     console.log(Guilds);
 	for (x in Guilds) {
 		counter = counter + 1}
-	console.log(`\nBot is currently in ${counter} guilds.`)
+	console.log(`\nBot is currently in ${counter} guilds.\n`)
 });
 
 client.on("interactionCreate", async interaction => {
@@ -76,7 +76,7 @@ client.on('messageCreate', (message) => {
     }
 	else if (message.mentions.members.first()){
 		fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag}).toString())
-		if(fs.existsSync(path.resolve('./data/user/' + message.mentions.members.first().id + '.json'))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve('./data/user/' + message.mentions.members.first().id + '.json')))); 
+		if(fs.existsSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`)))); 
 			if (user.afk == true) {
 				message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)}
 		}}

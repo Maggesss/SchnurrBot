@@ -11,7 +11,7 @@ module.exports = {
 		const term = interaction.options.getString("search");
 		const query = new URLSearchParams({ term });
 
-		const { list } = await fetch(`https://api.urbandictionary.com/v0/define?${query}`)
+		const { list } = await fetch("https://api.urbandictionary.com/v0/define?${query}")
 			.then(response => response.json());
 		
             if (!list.length) {

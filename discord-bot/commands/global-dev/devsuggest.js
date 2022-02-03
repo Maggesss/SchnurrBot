@@ -1,8 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
-const fs = require("fs")
-const path = require("path")
-const Server = require("C:/Users/mbjki/praktikum-vario/praktikum-vario-js/discord-bot/source/server/index")
 
 module.exports = {
 	data: new SlashCommandBuilder()
