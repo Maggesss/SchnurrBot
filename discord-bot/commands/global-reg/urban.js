@@ -5,7 +5,7 @@ const { MessageEmbed } = require("discord.js");
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("urban")
-		.setDescription("Select a member and ban them.")
+		.setDescription("Select a phrase to look up.")
 		.addStringOption(option => option
             .setName("search")
             .setDescription("Searchphrase")),
