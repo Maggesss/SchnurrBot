@@ -18,7 +18,7 @@ module.exports = {
                 .then(response => response.json());
             
                 if (!list.length) {
-                    return interaction.editReply(`No results found for **${term}**.`);
+                    return interaction.reply(`No results found for **${term}**.`);
 
                 }
 
