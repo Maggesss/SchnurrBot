@@ -80,9 +80,7 @@ client.on('messageCreate', (message) => {
 			if (user.afk == true) {
 				message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)}
 		}}
-	else if(!fs.existsSync(path.resolve(`./data/server/${message.guild.id}.json`))) {
-		fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}.json`), new Server({ id: message.guild.id, name: message.guild.name}).toString())
-	}
+	else { fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}.json`), new Server({ id: message.guild.id, name: message.guild.name}).toString()) }
 });
 
 client.login(token);
