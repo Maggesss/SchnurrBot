@@ -7,14 +7,12 @@ module.exports = {
 		.setDescription("Joins your voicechannel."),
     async execute(interaction) {
         try {
-            const guild = interaction.guild.guildId
-            const voiceChannel = interaction.client.voice.channel;
             joinVoiceChannel({
-                channelId: voiceChannel,
-                guildId: guild,
-                adapterCreator: interaction.guild.voiceAdapterCreator,
+                channelId: interaction.channel.id,
+                guildId: interaction.guild.id,
+                adapterCreator: interaction.guild.voiceAdapterCreator
             });
-            console.log(`${interaction.client.name} summoned me to: ${voiceChannel} on server: ${interaction.guild.name}`)
+            console.log(`${interaction.user.tag} summoned me on server: ${interaction.guild.name}`)
             return interaction.reply({ content: `Joined your channel.`, ephemeral: true })
         } catch (error) {
             console.error(error);
