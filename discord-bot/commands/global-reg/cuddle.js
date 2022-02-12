@@ -1,0 +1,18 @@
+const { SlashCommandBuilder } = require("@discordjs/builders");
+
+function randomTeddy() {
+    let x = Math.floor(Math.random() * 21);
+    let teddy = "";
+    while (x > teddy.length) {
+        teddy = teddy + ":teddy_bear:"
+    }
+    return(`Here you go: ${teddy} Cuddle with them!`)}
+
+module.exports = {
+	data: new SlashCommandBuilder()
+		.setName("cuddle")
+		.setDescription("Gives you some teddybears to cuddle with!"),
+	async execute(interaction) {
+		await interaction.reply(randomTeddy());
+	},
+};
