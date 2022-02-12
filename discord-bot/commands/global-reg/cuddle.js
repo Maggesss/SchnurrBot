@@ -2,10 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 
 function randomTeddy() {
     let x = Math.floor(Math.random() * 21);
-    let teddy = "";
-    while (x > teddy.length) {
-        teddy = teddy + ":teddy_bear:"
-    }
+    let teddy = ":teddy_bear:".repeat(x)
     return(`Here you go: ${teddy} Cuddle with them!`)}
 
 module.exports = {
