@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { InteractionResponseType } = require("discord-api-types");
 const fs = require("fs")
 const path = require("path")
 
@@ -53,7 +52,7 @@ module.exports = {
                 .setName("playlist")
                 .setDescription("The playlist to delete")
                 .setRequired(true)))
-                
+
         .addSubcommand(subcommand => subcommand
             .setName("showall")
             .setDescription("Shows all playlists of a member.")
