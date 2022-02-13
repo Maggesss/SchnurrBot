@@ -17,7 +17,7 @@ module.exports = {
             .addIntegerOption(option => option
                 .setName("target")
                 .setDescription("The song to remove")
-                .setRequired(true))
+                .setRequired(true)))
         .addSubcommand(subcommand => subcommand
             .setName("show")
             .setDescription("Shows a playlist of an user.")
@@ -28,7 +28,7 @@ module.exports = {
             .addIntegerOption(option => option
                 .setName("number")
                 .setDescription("The playlist to show.")
-                .setRequired(true)))),
+                .setRequired(true))),
                 
     async execute(interaction) {
         try {
