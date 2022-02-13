@@ -32,7 +32,7 @@ module.exports = {
                 
     async execute(interaction) {
         try {
-            return interaction.reply({ content: `Joined your channel.`, ephemeral: true })
+            return interaction.reply({ content: `This command is currently work-in-progress, stay tuned!.`, ephemeral: true })
         } catch (error) {
             console.error(error);
             return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
