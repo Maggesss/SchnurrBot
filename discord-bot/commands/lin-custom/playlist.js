@@ -1,4 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const { InteractionResponseType } = require("discord-api-types");
+const fs = require("fs")
+const path = require("path")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -22,16 +25,44 @@ module.exports = {
             .setName("show")
             .setDescription("Shows a playlist of an user.")
             .addUserOption(option => option
-                .setName("target")
+                .setName("member")
                 .setDescription("The user to get the playlist from.")
                 .setRequired(true))
             .addIntegerOption(option => option
                 .setName("number")
                 .setDescription("The playlist to show.")
-                .setRequired(true))),
+                .setRequired(true)))
+        .addSubcommand(subcommand => subcommand 
+            .setName("delete")
+            .setDescription("Removes whole playlist. (Use Playlist NR!)")
+            .addIntegerOption(option => option
+                .setName("playlist")
+                .setDescription("The playlist to delete")
+                .setRequired(true)))
+        .addSubcommand(subcommand => subcommand
+            .setName("showall")
+            .setDescription("Shows all playlists of an user.")
+            .addUserOption(option => option
+                .setName("user")
+                .setDescription("The choosen user."))),
                 
     async execute(interaction) {
         try {
+            if (!fs.existsSync(`./data/playlists/${interaction.user.id}`)) {
+                fs.mkdir(`./data/playlists/${interaction.user.id}`)
+            }
+            if (interaction.options.getSubcommand() === "add") {
+                const addUrl = interaction.options.getString("url");
+            } else if (interaction.options.getSubcommand() === "remove") {
+                const removeSongNum = interaction.options.getNumber("target")
+            } else if (interaction.options.getSubcommand() === "show") {
+                const showMember = interaction.options.getMember("member")
+                const showPlaylistNum = interaction.options.getNumber("number")
+            } else if (interaction.options.getSubcommand() === "delete") {
+                const deletePlaylistNum = interaction.options.getNumber("playlist")
+            } else if (interaction.options.getSubcommand() === "showall") {
+                const showallUser = interactions.options.getMember("user")
+            }
             return interaction.reply({ content: `This command is currently work-in-progress, stay tuned!.`, ephemeral: true })
         } catch (error) {
             console.error(error);
