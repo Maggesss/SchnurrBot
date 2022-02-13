@@ -9,6 +9,7 @@ module.exports = {
 		.addStringOption(option => option
             .setName("search")
             .setDescription("Searchphrase")),
+            
 	async execute(interaction) {
         try {
             const term = interaction.options.getString("search");

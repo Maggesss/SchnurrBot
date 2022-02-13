@@ -9,6 +9,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("cuddle")
 		.setDescription("Gives you some teddybears to cuddle with!"),
+		
 	async execute(interaction) {
 		await interaction.reply(randomTeddy());
 	},

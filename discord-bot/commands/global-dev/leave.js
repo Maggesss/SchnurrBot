@@ -8,6 +8,7 @@ module.exports = {
             .setName("target")
             .setDescription("The server to leave")
             .setRequired(true)),
+            
 	async execute(interaction) {
         try {
             if (interaction.user.id == 444460699025014784) {

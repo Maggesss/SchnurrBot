@@ -9,6 +9,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("pp")
 		.setDescription("Replies your pp lengh!"),
+		
 	async execute(interaction) {
 		await interaction.reply(randomPP());
 	},

@@ -4,6 +4,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("shutdown")
 		.setDescription("Shuts the Bot down."),
+        
 	async execute(interaction) {
         try {
             if (interaction.user.id == 444460699025014784) {

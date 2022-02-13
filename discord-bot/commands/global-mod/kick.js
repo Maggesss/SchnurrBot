@@ -9,6 +9,7 @@ module.exports = {
             .setName("target")
             .setDescription("The member to kick")
             .setRequired(true)),
+            
 	async execute(interaction) {
         try {
             if (interaction.client.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {

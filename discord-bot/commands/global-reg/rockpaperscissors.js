@@ -11,6 +11,7 @@ module.exports = {
 		.addStringOption(option => option
             .setName("choice")
             .setDescription("Put 'rock', 'paper' or 'scissors'.")),
+            
 	async execute(interaction) {
 		const choice_user = interaction.options.getString("choice");
         const choice_bot = getRndInteger(0, 2)

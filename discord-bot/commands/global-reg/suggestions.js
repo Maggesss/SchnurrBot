@@ -20,6 +20,7 @@ module.exports = {
             .setName("suggestion")
             .setDescription("Describe your suggestion.")
             .setRequired(true)),
+            
 	async execute(interaction) {
 		const type = interaction.options.getString("type");
         const name = interaction.options.getString("name");

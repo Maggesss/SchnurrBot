@@ -11,6 +11,7 @@ module.exports = {
             .setName("reason")
             .setDescription("The reason for being AFK")
             .setRequired(false)),
+            
 	async execute(interaction) {
         try {
             if(fs.existsSync(path.resolve(`./data/user/${interaction.user.id}.json`))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve(`./data/user/${interaction.user.id}.json`)))); 

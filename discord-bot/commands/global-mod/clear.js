@@ -6,6 +6,7 @@ module.exports = {
 		.setName("clear")
 		.setDescription("clear up to 99 messages.")
 		.addIntegerOption(option => option.setName("amount").setDescription("Number of messages to clear")),
+		
 	async execute(interaction) {
 		const amount = interaction.options.getInteger("amount");
 		try {

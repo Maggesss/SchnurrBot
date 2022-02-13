@@ -5,6 +5,7 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("server")
 		.setDescription("Gives you some information about this server."),
+		
 	async execute(interaction) {
 		const embed = new MessageEmbed()
 			.setColor("#0099ff")

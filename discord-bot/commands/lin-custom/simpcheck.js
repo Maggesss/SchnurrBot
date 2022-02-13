@@ -12,6 +12,7 @@ module.exports = {
             .setName("user")
             .setDescription("The user to check.")
             .setRequired(true)),
+            
 	async execute(interaction) {
         try {
             const user = interaction.options.getUser("user");

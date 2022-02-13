@@ -12,6 +12,7 @@ module.exports = {
             .setName("channel")
             .setDescription("Select the channel to log your suggestions. (Put channel ID)")
             .setRequired(true)),
+            
 	async execute(interaction) {
 		const channel = interaction.options.getString("channel");
         if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) {
