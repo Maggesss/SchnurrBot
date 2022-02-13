@@ -6,7 +6,6 @@ module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("playlist")
 		.setDescription("Edits or shows your playlist(s).")
-
         .addSubcommand(subcommand => subcommand
             .setName("addsong")
             .setDescription("Adds a song to your playlist.")
@@ -15,8 +14,9 @@ module.exports = {
                 .setDescription("The YT-URL of your song.")
                 .setRequired(true))
             .addNumberOption(option => option
-                .setName("playlist")))
-
+                .setName("plnum")
+                .setDescription("Number of Playlist to add the song to.")
+                .setRequired(true)))
         .addSubcommand(subcommand => subcommand
             .setName("addplaylist")
             .setDescription("Adds a playlist to your bot-profile.")
@@ -24,7 +24,6 @@ module.exports = {
                 .setName("name")
                 .setDescription("Name your playlist.")
                 .setRequired(true)))
-
         .addSubcommand(subcommand => subcommand 
             .setName("remove")
             .setDescription("Removes a song from your playlist. (Use Number in Playlist!)")
@@ -32,7 +31,6 @@ module.exports = {
                 .setName("target")
                 .setDescription("The song to remove")
                 .setRequired(true)))
-
         .addSubcommand(subcommand => subcommand
             .setName("show")
             .setDescription("Shows a playlist of an member.")
@@ -41,25 +39,24 @@ module.exports = {
                 .setDescription("The user to get the playlist from.")
                 .setRequired(true))
             .addIntegerOption(option => option
-                .setName("playlist")
+                .setName("playlistnum")
                 .setDescription("The playlist to show.")
                 .setRequired(true)))
-
         .addSubcommand(subcommand => subcommand 
             .setName("delete")
             .setDescription("Removes whole playlist. (Use Playlist NR!)")
             .addIntegerOption(option => option
-                .setName("playlist")
+                .setName("playlistnumber")
                 .setDescription("The playlist to delete")
                 .setRequired(true)))
-
         .addSubcommand(subcommand => subcommand
             .setName("showall")
             .setDescription("Shows all playlists of a member.")
             .addUserOption(option => option
-                .setName("member")
-                .setDescription("The choosen member."))),
-                
+                .setName("user")
+                .setDescription("The choosen member.")
+                .setRequired(true))),
+   
     async execute(interaction) {
         try {
             if (!fs.existsSync(`./data/playlists/${interaction.user.id}`)) {
@@ -67,22 +64,23 @@ module.exports = {
             }
             if (interaction.options.getSubcommand() === "addsong") {
                 const addUrl = interaction.options.getString("url");
+                const playlistNum = interaction.option.getNumber("plnum");
 
             } else if (interaction.options.getSubcommand() === "addplaylist") {
-                const name = interaction.options.getString("name")
+                const name = interaction.options.getString("name");
 
             } else if (interaction.options.getSubcommand() === "remove") {
-                const songNum = interaction.options.getNumber("target")
+                const songNum = interaction.options.getNumber("target");
 
             } else if (interaction.options.getSubcommand() === "show") {
-                const showMember = interaction.options.getMember("member")
-                const playlistNum = interaction.options.getNumber("playlist")
+                const showMember = interaction.options.getMember("member");
+                const playlistNum = interaction.options.getNumber("playlistnum");
 
             } else if (interaction.options.getSubcommand() === "delete") {
-                const playlistNum = interaction.options.getNumber("playlist")
+                const playlistNum = interaction.options.getNumber("playlistnumber");
 
             } else if (interaction.options.getSubcommand() === "showall") {
-                const showallUser = interactions.options.getMember("user")
+                const showallUser = interactions.options.getMember("user");
             };
             return interaction.reply({ content: `This command is currently work-in-progress, stay tuned!.`, ephemeral: true });
         } catch (error) {
