@@ -1,7 +1,8 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const functions = require("../../functions.js")
 
 function randomPP() {
-    let x = Math.floor(Math.random() * 11);
+    let x = functions.getRandomIntInclusive(1, 10)
     let pp = "=".repeat(x)
     return(`8${pp}D`)}
 

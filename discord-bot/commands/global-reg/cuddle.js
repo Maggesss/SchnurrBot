@@ -1,7 +1,8 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const functions = require("../../functions.js")
 
 function randomTeddy() {
-    let x = Math.floor(Math.random() * 21);
+    let x =  functions.getRandomIntInclusive(1, 20)
     let teddy = ":teddy_bear:".repeat(x)
     return(`Here you go: ${teddy} Cuddle with them!`)}
 
