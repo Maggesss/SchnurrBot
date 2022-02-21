@@ -1,0 +1,1 @@
+channel.permissionOverwrites.edit(user.id, { VIEW_CHANNEL: true });
