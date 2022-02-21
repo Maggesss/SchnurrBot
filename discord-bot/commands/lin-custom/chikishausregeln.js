@@ -12,7 +12,7 @@ module.exports = {
         
 	async execute(interaction) {
         const regelNum = interaction.options.getString("regelnummer")
-        let Hausregel = ""
+        let Hausregel = "";
         if (regelNum == 1) {Hausregel = "Das Schwängern oder Schwanger werden vor dem Alter von 18 Jahren ist in diesem Haushalt untersagt! Ab dem erhalten der Volljährigkeit geht mir das am Arsch vorbei tbh."}
         else if (regelNum == "2") {Hausregel = "Es ist mir lieber, wenn ihr illegales zuhause macht. Außerhalb der eigenen vier Wände können viele Unfälle passieren."}
         else if (regelNum == "3") {Hausregel = "Sexorgien müssen ab 5,43 Personen angekündigt werden. Verhüten nicht vergessen!"}
@@ -22,7 +22,7 @@ module.exports = {
         else if (regelNum == "7") {Hausregel = "Beim Trinken von Alkohol muss mindestens eine Runde Ich-Hab-Noch-Nie gespielt werden!"}
         else if (regelNum == "8") {Hausregel = "RADLERVERBOT!"}
         else if (regelNum == "9") {Hausregel = "Menschen dürfen gegessen werden :3"}
-        else {return interaction.reply("Not a valid Rule-Number!")} 
+        else {return interaction.reply("Not a valid Rule-Number!")}; //ÜBERARBEITEN!!!! ARRAYS BENUTZEN, DUMMES MUGGES!
 
 		const embed = new MessageEmbed()
 			.setColor("#0099ff")
@@ -32,6 +32,6 @@ module.exports = {
 			)
 			.setFooter({ text: "©2022 Chiki" })
 			.setTimestamp();
-		return interaction.reply({ embeds: [embed] })
+		return interaction.reply({ embeds: [embed] });
 	},
 };

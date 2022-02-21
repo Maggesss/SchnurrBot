@@ -18,13 +18,11 @@ module.exports = {
 					console.error(error);
 					interaction.reply({ content: "There was an error trying to clear messages in this channel!", ephemeral: true })})
 				console.log(`${interaction.member.username} cleared: ${amount} messages on server: ${interaction.guild.name}`)
-				return interaction.reply({ content: `Successfully cleared \`${amount}\` messages.`, ephemeral: true})}
-            else {
-                return interaction.reply("You don't have permissions to do that!")
-            }
+				return interaction.reply({ content: `Successfully cleared \`${amount}\` messages.`, ephemeral: true })
+			} else { return interaction.reply("You don't have permissions to do that!") };
         } catch (error) {
             console.error(error);
             return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
-        }
+        };
 	},
 };

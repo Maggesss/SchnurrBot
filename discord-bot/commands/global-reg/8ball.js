@@ -1,5 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const functions = require("../../functions.js")
+const functions = require("../../functions.js");
 
 function random_answer() {
     let x = functions.getRandomIntInclusive(0, 19)
@@ -38,10 +38,10 @@ module.exports = {
     async execute(interaction) {
         try {
             const question = interaction.options.getString("question")
-            return interaction.reply({ content: `Question:\n"${question}"\n\nAnswer:\n||"${random_answer()}"||`, ephemeral: false })
+            return interaction.reply({ content: `Question:\n"${question}"\n\nAnswer:\n||"${random_answer()}"||`, ephemeral: false });
         } catch (error) {
             console.error(error);
             return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
-        }
+        };
     },
 };

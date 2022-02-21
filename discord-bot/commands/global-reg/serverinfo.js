@@ -20,6 +20,6 @@ module.exports = {
 			)
 			.setFooter({ text: `ID: ${interaction.guild.id} | Server Created` })
 			.setTimestamp(interaction.guild.createdTimestamp);
-		return interaction.reply({ embeds: [embed] })
+		return interaction.reply({ embeds: [embed] });
 	},
 };

@@ -21,7 +21,7 @@ module.exports = {
                 if (!list.length) {
                     return interaction.reply(`No results found for **${term}**.`);
 
-                }
+                };
 
             const trim = (str, max) => ((str.length > max) ? `${str.slice(0, max - 3)}...` : str);
             const [answer] = list;
@@ -38,6 +38,6 @@ module.exports = {
             } catch (error) {
                 console.error(error);
                 return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
-            }
+            };
 	},
 };

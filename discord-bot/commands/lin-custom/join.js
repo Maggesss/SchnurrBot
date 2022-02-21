@@ -12,8 +12,8 @@ module.exports = {
                 guildId: interaction.guild.id,
                 adapterCreator: interaction.guild.voiceAdapterCreator
             });
-            console.log(`${interaction.user.tag} summoned me on server: ${interaction.guild.name}`)
-            return interaction.reply({ content: `This command is currently work-in-progress, stay tuned!.`, ephemeral: true })
+            console.log(`${interaction.user.tag} summoned me on server: ${interaction.guild.name}`);
+            return interaction.reply({ content: `This command is currently work-in-progress, stay tuned!.`, ephemeral: true });
             //return interaction.reply({ content: `Joined your channel.`, ephemeral: true })
         } catch (error) {
             console.error(error);

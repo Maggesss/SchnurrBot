@@ -1,6 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const fs = require("fs")
-const path = require("path")
+const fs = require("fs");
+const path = require("path");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -60,25 +60,20 @@ module.exports = {
     async execute(interaction) {
         try {
             if (!fs.existsSync(`./data/playlists/${interaction.user.id}`)) {
-                fs.mkdir(`./data/playlists/${interaction.user.id}`)
+                fs.mkdir(`./data/playlists/${interaction.user.id}`);
             }
             if (interaction.options.getSubcommand() === "addsong") {
                 const addUrl = interaction.options.getString("url");
                 const playlistNum = interaction.option.getNumber("plnum");
-
             } else if (interaction.options.getSubcommand() === "addplaylist") {
                 const name = interaction.options.getString("name");
-
             } else if (interaction.options.getSubcommand() === "remove") {
                 const songNum = interaction.options.getNumber("target");
-
             } else if (interaction.options.getSubcommand() === "show") {
                 const showMember = interaction.options.getMember("member");
                 const playlistNum = interaction.options.getNumber("playlistnum");
-
             } else if (interaction.options.getSubcommand() === "delete") {
                 const playlistNum = interaction.options.getNumber("playlistnumber");
-
             } else if (interaction.options.getSubcommand() === "showall") {
                 const showallUser = interactions.options.getMember("user");
             };

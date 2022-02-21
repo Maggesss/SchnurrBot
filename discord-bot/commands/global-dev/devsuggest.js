@@ -22,7 +22,7 @@ module.exports = {
 		const type = interaction.options.getString("type");
         const name = interaction.options.getString("name");
         const suggestion = interaction.options.getString("suggestion");
-        const author = interaction.user.tag
+        const author = interaction.user.tag;
 
         const embed = new MessageEmbed()
             .setColor("#0099ff")
@@ -38,6 +38,7 @@ module.exports = {
         interaction.client.channels.cache.get("936549224898764800").send({ embeds: [embed] }).then(sentMessage => {
             sentMessage.react("✅");
             sentMessage.react("❌");
-        return interaction.reply({ content: `Suggestion sent.`, ephemeral: true})})
+            return interaction.reply({ content: `Suggestion sent.`, ephemeral: true });
+        });
 	}
 };

@@ -1,8 +1,8 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { MessageEmbed } = require("discord.js");
-const fs = require("fs")
-const path = require("path")
-const Server = require("../../source/server/index")
+const fs = require("fs");
+const path = require("path");
+const Server = require("../../source/server/index");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -44,10 +44,12 @@ module.exports = {
                     sentMessage.react("✅");
                     sentMessage.react("❌");
                 return interaction.reply({ content: "Suggestion sent.", ephemeral: true})
-            })} else {interaction.client.channels.cache.get(server.suggestionChannelID).send({ embeds: [embed] }).then(sentMessage => {
+                });
+            } else {interaction.client.channels.cache.get(server.suggestionChannelID).send({ embeds: [embed] }).then(sentMessage => {
                 sentMessage.react("✅");
                 sentMessage.react("❌");
-                return interaction.reply({ content: "Suggestion sent.", ephemeral: true})})}
+                return interaction.reply({ content: "Suggestion sent.", ephemeral: true});
+            })};
         };
 	},
 };

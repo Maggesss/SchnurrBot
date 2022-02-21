@@ -26,13 +26,11 @@ module.exports = {
                 const banreason = interaction.options.getString("banreason")
                 await user.ban({ days: deleteDays, reason: banreason })
                 console.log(`${interaction.member} banned: ${user.username} on server: ${interaction.guild.name}`)
-                return interaction.reply({ content: `You banned: ${user.username}`, ephemeral: true })}
-            else {
-                return interaction.reply("You don't have permissions to do that!")
-            }
+                return interaction.reply({ content: `You banned: ${user.username}`, ephemeral: true })
+            } else { return interaction.reply("You don't have permissions to do that!") }
         } catch (error) {
             console.error(error);
             return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
-        }
+        };
 	},
 };
