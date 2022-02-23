@@ -16,10 +16,11 @@ module.exports = {
 	async execute(interaction) {
 		const channel = interaction.options.getString("channel");
         if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) {
-            if (fs.existsSync(path.resolve(`./data/server/${interaction.guild.id}.json`))) {
-                    fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}.json`), new Server({ id: interaction.guild.id, suggestionChannelID: channel, name: interaction.guild.name}).toString());
+                if (fs.existsSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))) {
+                    const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))))
+                    fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, suggestionChannelID: channel, name: interaction.guild.name, rentavcChannelID: server.rentavcChannelID}).toString());
                     return interaction.reply({ content: "Suggestionchannel set.", ephemeral: true });
-            };
+                };
         } else { return interaction.reply("You don't have permissions to do that!")};
     },
 };

@@ -37,8 +37,8 @@ module.exports = {
             )
             .setTimestamp()
             .setFooter({ text: "©2022 Magges" });
-        if (fs.existsSync(path.resolve(`./data/server/${interaction.guild.id}.json`))) 
-            { const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${interaction.guild.id}.json`))))
+        if (fs.existsSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))) 
+            { const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))))
             if (server.suggestionChannelID == "None") {
                 interaction.channel.send({ embeds: [embed] }).then(sentMessage => {
                     sentMessage.react("✅");

@@ -1,6 +1,6 @@
 class Server {
     /**
-     * @param {Server} data 
+     * @param {Server} data
      */
     constructor(data) {
         /**
@@ -12,6 +12,10 @@ class Server {
          * @type {String}
          */
         this.suggestionChannelID = data.suggestionChannelID; if(!this.suggestionChannelID) { this.suggestionChannelID = "None" }
+        /**
+         * @type {String}
+         */
+        this.rentavcChannelID = data.rentavcChannelID; if(!this.rentavcChannelID) { this.rentavcChannelID = "None" }
         /**
          * @type {String}
          */
