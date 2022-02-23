@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { Permissions } = require('discord.js');
 const path = require("path")
 const fs = require("fs")
-const Server = require("./source/server/index");
+const Server = require("../../source/server/index");
 
 module.exports = {
 	data: new SlashCommandBuilder()
