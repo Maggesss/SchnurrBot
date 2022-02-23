@@ -11,10 +11,8 @@ client.commands = new Collection();
 
 const commandFolders = fs.readdirSync("./commands");
 
-for (const dir of commandFolders){
-
+for (const dir of commandFolders) {
 	const commandFiles = fs.readdirSync(`./commands/${dir}`).filter(file => file.endsWith(".js"));
-
 	for (const file of commandFiles) {
 		const command = require(`./commands/${dir}/${file}`);
 		client.commands.set(command.data.name, command);
@@ -22,7 +20,7 @@ for (const dir of commandFolders){
 };
 
 client.once("ready", () => {
-	let counter = 0
+	let counter = 0;
 	console.log("Ready!");
     const guilds = client.guilds.cache.map(guild => `${guild.id}: ${guild.name}`);
     console.log(guilds);
@@ -34,13 +32,12 @@ client.once("ready", () => {
 
 client.on("interactionCreate", async interaction => {
 	if (!interaction.isCommand()) return;
-
 	if(!fs.existsSync(path.resolve(`./data/user/${interaction.user.id}.json`))) {
 		fs.writeFileSync(path.resolve(`./data/user/${interaction.user.id}.json`), new User({ id: interaction.user.id, name: interaction.user.tag }).toString());
-	}
+	};
 	if(!fs.existsSync(path.resolve(`./data/server/${interaction.guild.id}.json`))) {
 		fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name }).toString());
-	}
+	};
 
 	const command = client.commands.get(interaction.commandName);
 
@@ -70,7 +67,7 @@ client.on('messageCreate', (message) => {
 
         if (message.attachments.size !== 0) {
             dmLogEmbed.setImage(attachment.url);
-        }
+        };
         client.channels.fetch("936549224898764800").then((channel) => {
             return channel.send({ embeds: [dmLogEmbed] });
         });
@@ -80,10 +77,10 @@ client.on('messageCreate', (message) => {
 		if(fs.existsSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`)))); 
 			if (user.afk == true) {
 				return message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)
-			}
-		}
+			};
+		};
 	}
-	else if(!fs.existsSync(path.resolve(`./data/server/${message.guild.id}.json`))) {
+	else if (!fs.existsSync(path.resolve(`./data/server/${message.guild.id}.json`))) {
 		fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}.json`), new Server({ id: message.guild.id, name: message.guild.name }).toString());
 	}
 	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
