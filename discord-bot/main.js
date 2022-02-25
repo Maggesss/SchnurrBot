@@ -3,6 +3,7 @@ const { token } = require("./config.json");
 const { Client, Collection, MessageEmbed} = require("discord.js");
 const path = require("path");
 const User = require("./source/user/index");
+const Server = require("./source/server/index");
 
 const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS"], partials: ["CHANNEL"]});
 
@@ -35,7 +36,9 @@ client.on("interactionCreate", async interaction => {
 		fs.writeFileSync(path.resolve(`./data/user/${interaction.user.id}.json`), new User({ id: interaction.user.id, name: interaction.user.tag }).toString());
 	};
 	if (!fs.existsSync(`./data/server/${interaction.guild.id}`)) {
-		fs.mkdir(`./data/server/${interaction.guild.id}`);
+		fs.mkdir(`./data/server/${interaction.guild.id}`, (err, directory) => {
+			if (err) throw err;
+			console.log(directory)});
 		fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name }).toString());
 	};
 
@@ -71,18 +74,18 @@ client.on('messageCreate', (message) => {
         client.channels.fetch("936549224898764800").then((channel) => {
             return channel.send({ embeds: [dmLogEmbed] });
         });
-    }
-	else if (message.mentions.members.first()) {
+    } else if (message.mentions.members.first()) {
 		fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
 		if(fs.existsSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`)))); 
 			if (user.afk == true) {
 				return message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)
 			};
 		};
-	}
-	else if (!fs.existsSync(`./data/server/${message.guild.id}`)) {
-		fs.mkdir(`./data/server/${message.guild.id}`);
-		fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name }).toString());
+	} else if (!fs.existsSync(`./data/server/${message.guild.id}`)) {
+		fs.mkdir(`./data/server/${message.guild.id}`, (err, directory) => {
+			if (err) throw err;
+			console.log(directory)});
+		fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}/regData.json`), new Server({ id: message.guild.id, name: message.guild.name }).toString());
 	};
 	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
 });

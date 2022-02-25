@@ -6,7 +6,7 @@ class Server {
         /**
          * @type {String}
          */
-        this.id = data.id
+        this.id = data.id;
         if(!this.id || typeof(this.id) != "string") { throw Error("Invalid ID: Pass a valid ID object") }
         /**
          * @type {String}
