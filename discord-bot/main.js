@@ -82,7 +82,7 @@ client.on('messageCreate', (message) => {
             return channel.send({ embeds: [dmLogEmbed] });
         });
     } else if (message.mentions.members.first()) {
-		if (message.mentions.members.first().id = "618800365231669258") {
+		if (message.mentions.has(client.user)) {
 			return message.reply({ content: respWordlist[functions.getRandomIntInclusive(0, 4)], ephemeral: false })
 		} else { fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
 			if(fs.existsSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`)))); 
