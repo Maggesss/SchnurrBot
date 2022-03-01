@@ -18,7 +18,7 @@ module.exports = {
                 if (user.afk == false) {
                     try {const reason = interaction.options.get("reason").value
                         fs.writeFileSync(path.resolve(`./data/user/${interaction.user.id}.json`), new User({ id: interaction.user.id, afk: true, reason: reason, name: interaction.user.tag}).toString());
-                    } catch { 
+                    } catch {
                         fs.writeFileSync(path.resolve(`./data/user/${interaction.user.id}.json`), new User({ id: interaction.user.id, afk: true, name: interaction.user.tag}).toString());
                     };
                     return interaction.reply({ content: "You are now AFK.", ephemeral: true });

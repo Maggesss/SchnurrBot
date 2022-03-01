@@ -2,7 +2,7 @@ const { SlashCommandBuilder } = require("@discordjs/builders");
 const { Permissions } = require('discord.js');
 const path = require("path")
 const fs = require("fs")
-const Server = require("../../source/server/index");
+const Server = require("../source/server/index");
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -14,7 +14,7 @@ module.exports = {
             if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS) || (interaction.user.id == "444460699025014784")) {
                 if (fs.existsSync(path.resolve(`../../data/server/${interaction.guild.id}/regData.json`))) {
                     const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`../../data/server/${interaction.guild.id}/regData.json`))));
-                    const newChannel = await guild.channels.create("rent-a-vc");
+                    const newChannel = await interaction.guild.channels.create("rent-a-vc", { reason: "New cool rent-a-vc channel!"});
                     fs.writeFileSync(path.resolve(`../../data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name, rentavcChannelID: newChannel.id, suggestionChannelID: server.suggestionChannelID}).toString());
                     return interaction.reply({ content: `Channel created.`, ephemeral: true });
                 };
