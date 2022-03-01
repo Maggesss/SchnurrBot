@@ -4,6 +4,13 @@ const { Client, Collection, MessageEmbed} = require("discord.js");
 const path = require("path");
 const User = require("./source/user/index");
 const Server = require("./source/server/index");
+const functions = require("./functions.js");
+
+const respWordlist= ["Hi :D",
+					"Huh?",
+					"What's up, man?",
+					":3",
+					"Wo dares to ping me!? :rage:"]
 
 const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS"], partials: ["CHANNEL"]});
 
@@ -75,10 +82,13 @@ client.on('messageCreate', (message) => {
             return channel.send({ embeds: [dmLogEmbed] });
         });
     } else if (message.mentions.members.first()) {
-		fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
-		if(fs.existsSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`)))); 
-			if (user.afk == true) {
-				return message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)
+		if (message.mentions.members.first().id = "618800365231669258") {
+			return message.reply({ content: respWordlist[functions.getRandomIntInclusive(0, 4)], ephemeral: false })
+		} else { fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
+			if(fs.existsSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`))) { const user = new User(JSON.parse(fs.readFileSync(path.resolve(`./data/user/${message.mentions.members.first().id}.json`)))); 
+				if (user.afk == true) {
+					return message.channel.send(`This user is currently AFK because of: ${user.reason} There is no point in mentioning them...`)
+				};
 			};
 		};
 	} else if (!fs.existsSync(`./data/server/${message.guild.id}`)) {
