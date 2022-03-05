@@ -35,7 +35,7 @@ module.exports = {
             .setTimestamp()
             .setFooter({ text: "©2022 Magges" });
 
-        interaction.client.channels.cache.get("936549224898764800").send({ embeds: [embed] }).then(sentMessage => {
+        interaction.client.channels.cache.get("949777598714626069").send({ embeds: [embed] }).then(sentMessage => {
             sentMessage.react("✅");
             sentMessage.react("❌");
             return interaction.reply({ content: `Suggestion sent.`, ephemeral: true });
