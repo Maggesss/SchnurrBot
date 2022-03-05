@@ -11,14 +11,15 @@ module.exports = {
 		const amount = interaction.options.getInteger("amount");
 		try {
             if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES) || (interaction.user.id == "444460699025014784")) {
-				if (amount <= 1 || amount > 100) {
+				if ((amount <= 1) || (amount > 100)) {
 					return interaction.reply({ content: "You need to input a number between 1 and 99.", ephemeral: true });
-				}
+				};
 				await interaction.channel.bulkDelete(amount, true).catch(error => {
 					console.error(error);
-					interaction.reply({ content: "There was an error trying to clear messages in this channel!", ephemeral: true })})
-				console.log(`${interaction.member.username} cleared: ${amount} messages on server: ${interaction.guild.name}`)
-				return interaction.reply({ content: `Successfully cleared \`${amount}\` messages.`, ephemeral: true })
+					interaction.reply({ content: "There was an error trying to clear messages in this channel!", ephemeral: true });
+				});
+				console.log(`${interaction.member.username} cleared: ${amount} messages on server: ${interaction.guild.name}`);
+				return interaction.reply({ content: `Successfully cleared \`${amount}\` messages.`, ephemeral: true });
 			} else { return interaction.reply("You don't have permissions to do that!") };
         } catch (error) {
             console.error(error);
