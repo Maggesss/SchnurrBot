@@ -15,7 +15,7 @@ module.exports = {
                 const newName = interaction.options.getString("nick");
                 await interaction.client.user.setUsername(newName)
                 console.log(`Changed name to: "${newName}"`)
-                return interaction.reply({ content: `Bot left : ${gl.name}`, ephemeral: true })
+                return interaction.reply({ content: `Changed name to: "${newName}"`, ephemeral: true })
             } else { return interaction.reply({ content: `You don't have permissions to do that!`, ephemeral: true }) };
         } catch (error) {
             console.error(error);
