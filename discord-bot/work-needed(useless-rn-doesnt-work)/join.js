@@ -8,9 +8,9 @@ module.exports = {
     async execute(interaction) {
         try {
             joinVoiceChannel({
-                channelId: interaction.channel.id,
+                channelId: interaction.member.voice.channelID,
                 guildId: interaction.guild.id,
-                adapterCreator: interaction.guild.voiceAdapterCreator
+                adapterCreator: interaction.guild.voiceAdapterCreator,
             });
             console.log(`${interaction.user.tag} summoned me on server: ${interaction.guild.name}`);
             return interaction.reply({ content: `This command is currently work-in-progress, stay tuned!.`, ephemeral: true });
