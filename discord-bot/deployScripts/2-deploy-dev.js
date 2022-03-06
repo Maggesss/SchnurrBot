@@ -4,14 +4,14 @@ const { Routes } = require("discord-api-types/v9");
 const { clientId, token } = require("../config.json");
 
 const commands = [];
-const commandFolders = fs.readdirSync("./commands");
+const commandFolders = fs.readdirSync("../commands");
 
 for (const dir of commandFolders) {
 	if ((dir.startsWith("glob") == true) || (dir.startsWith("lin") == true) || (dir.startsWith("dev") == true)) {
-		const commandFiles = fs.readdirSync(`./commands/${dir}`).filter(file => file.endsWith(".js"));
+		const commandFiles = fs.readdirSync(`../commands/${dir}`).filter(file => file.endsWith(".js"));
 
 		for (const file of commandFiles) {
-			const command = require(`./commands/${dir}/${file}`);
+			const command = require(`../commands/${dir}/${file}`);
 		commands.push(command.data.toJSON());
 		};
 	};
