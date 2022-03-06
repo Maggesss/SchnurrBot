@@ -4,11 +4,11 @@ const { Routes } = require("discord-api-types/v9");
 const { clientId, token } = require("../config.json");
 
 const commands = [];
-const commandFolders = fs.readdirSync("../commands");
+const commandFolders = fs.readdirSync("commands");
 
 for (const dir of commandFolders) {
 	if ((dir.startsWith("glob") == true) || (dir.startsWith("lin") == true) || (dir.startsWith("dev") == true)) {
-		const commandFiles = fs.readdirSync(`../commands/${dir}`).filter(file => file.endsWith(".js"));
+		const commandFiles = fs.readdirSync(`commands/${dir}`).filter(file => file.endsWith(".js"));
 
 		for (const file of commandFiles) {
 			const command = require(`../commands/${dir}/${file}`);
@@ -20,5 +20,5 @@ for (const dir of commandFolders) {
 const rest = new REST({ version: "9" }).setToken(token);
 
 rest.put(Routes.applicationGuildCommands(clientId, "949777471811768330"), { body: commands })
-	.then(() => console.log("Successfully registered application commands."))
+	.then(() => console.log("Successfully registered application commands to dev."))
 	.catch(console.error);

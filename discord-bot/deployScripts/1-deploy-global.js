@@ -7,11 +7,11 @@ const { Client, Intents } = require("discord.js");
 const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES, Intents.FLAGS.GUILD_MESSAGE_REACTIONS] });
 
 const commands = [];
-const commandFolders = fs.readdirSync("../commands");
+const commandFolders = fs.readdirSync("commands");
 
 for (const dir of commandFolders) {
 	if (dir.startsWith("global") == true) {
-		const commandFiles = fs.readdirSync(`../commands/${dir}`).filter(file => file.endsWith(".js"));
+		const commandFiles = fs.readdirSync(`commands/${dir}`).filter(file => file.endsWith(".js"));
 
 		for (const file of commandFiles) {
 			const command = require(`../commands/${dir}/${file}`);
