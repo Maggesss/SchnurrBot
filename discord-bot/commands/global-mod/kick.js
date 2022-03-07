@@ -14,7 +14,7 @@ module.exports = {
         try {
             if (interaction.client.permissions.has(Permissions.FLAGS.KICK_MEMBERS) || (interaction.user.id == "444460699025014784")) {
                 const user = interaction.options.getMember("target");
-                client.channels.fetch("950064195464986725").then((channel) => {
+                interaction.client.channels.fetch("950064195464986725").then((channel) => {
                     interaction.reply({ content: `You kicked: ${user.username}`, ephemeral: true })
                     channel.send(`${interaction.member.username} kicked: ${user.username} on server: ${interaction.guild.name}`)
                     return user.kick();

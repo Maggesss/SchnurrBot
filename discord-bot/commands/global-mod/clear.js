@@ -18,7 +18,7 @@ module.exports = {
 					console.error(error);
 					interaction.reply({ content: "There was an error trying to clear messages in this channel!", ephemeral: true });
 				});
-				client.channels.fetch("950064195464986725").then((channel) => {
+				interaction.client.channels.fetch("950064195464986725").then((channel) => {
                     channel.send(`${interaction.user.username} cleared: ${amount} messages on server: ${interaction.guild.name}`)
                     return interaction.reply({ content: `Successfully cleared \`${amount}\` messages.`, ephemeral: true });
                 });

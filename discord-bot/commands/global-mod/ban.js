@@ -25,7 +25,7 @@ module.exports = {
                 const deleteDays = interaction.options.getNumber("days")
                 const banreason = interaction.options.getString("banreason")
 
-                client.channels.fetch("950064195464986725").then((channel) => {
+                interaction.client.channels.fetch("950064195464986725").then((channel) => {
                     interaction.reply({ content: `You banned: ${user.username}`, ephemeral: true })
                     channel.send(`${interaction.member} banned: ${user.username} on server: ${interaction.guild.name}`)
                     return user.ban({ days: deleteDays, reason: banreason })
