@@ -16,7 +16,7 @@ module.exports = {
                 const user = interaction.options.getMember("target");
                 client.channels.fetch("950064195464986725").then((channel) => {
                     interaction.reply({ content: `You kicked: ${user.username}`, ephemeral: true })
-                    await channel.send(`${interaction.member.username} kicked: ${user.username} on server: ${interaction.guild.name}`)
+                    channel.send(`${interaction.member.username} kicked: ${user.username} on server: ${interaction.guild.name}`)
                     return await user.kick();
                 });
             } else { return interaction.reply("You don't have permissions to do that!") };
