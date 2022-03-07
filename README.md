@@ -7,3 +7,6 @@ This is just a bot-user for Discord.
 1. one bot for every use
 2. stay 100% free
 3. custom, server independent commands
+
+
+config.json & serverdata / usedata excluded.
