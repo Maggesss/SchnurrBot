@@ -13,7 +13,6 @@ const respWordlist= ["Hi :D",
 					":3",
 					"Who dares to ping me!? :rage:"]
 
-
 //Setup & load commands
 const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS"], partials: ["CHANNEL"]});
 
