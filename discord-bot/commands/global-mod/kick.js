@@ -14,9 +14,11 @@ module.exports = {
         try {
             if (interaction.client.permissions.has(Permissions.FLAGS.KICK_MEMBERS) || (interaction.user.id == "444460699025014784")) {
                 const user = interaction.options.getMember("target");
-                await user.kick()
-                console.log(`${interaction.member.username} kicked: ${user.username} on server: ${interaction.guild.name}`)
-		        return interaction.reply({ content: `You kicked: ${user.username}`, ephemeral: true })
+                client.channels.fetch("950064195464986725").then((channel) => {
+                    interaction.reply({ content: `You kicked: ${user.username}`, ephemeral: true })
+                    await channel.send(`${interaction.member.username} kicked: ${user.username} on server: ${interaction.guild.name}`)
+                    return await user.kick();
+                });
             } else { return interaction.reply("You don't have permissions to do that!") };
         } catch (error) {
             console.error(error);

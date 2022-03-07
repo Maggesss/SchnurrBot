@@ -88,6 +88,7 @@ client.on('messageCreate', (message) => {
         client.channels.fetch("949777558860349481").then((channel) => {
             return channel.send({ embeds: [dmLogEmbed] });
         });
+		
 	//message mention?
     } else if (message.mentions.members.first()) {
 		//bot mentioned?
