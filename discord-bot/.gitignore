@@ -1,1 +1,3 @@
-*.json
+data/user/
+data/server/
+config.json
