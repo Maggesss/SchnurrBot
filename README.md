@@ -9,4 +9,4 @@ This is just a bot-user for Discord.
 3. custom, server independent commands
 
 
-config.json & serverdata / usedata excluded.
+config.json & serverdata / usedata excluded. (./data/server/... & .data/user/...)
