@@ -68,7 +68,7 @@ client.on("interactionCreate", async interaction => {
 });
 
 //message listener
-client.on('messageCreate', (message) => {
+client.on("messageCreate", (message) => {
 
     if (message.author.bot) {return};
 
@@ -111,6 +111,19 @@ client.on('messageCreate', (message) => {
 	};
 	//create userfile => no more afk
 	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
+});
+
+client.on("channelDelete", (delChannel) => {
+	if (fs.existsSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))) {
+		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))));
+		if (server.rentavcChannelID = delChannel.id) {
+			fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name, suggestionChannelID: server.suggestionChannelID}).toString());
+			client.channels.fetch("950064195464986725").then((channel) => {
+				channel.send(`\`\`${user}\`\` deleted rent-a-vc channel on server: \`\`${guild.name}\`\``)
+				return;
+			});
+		} else { return };
+	};
 });
 
 client.login(token);
