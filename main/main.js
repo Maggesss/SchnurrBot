@@ -1,9 +1,10 @@
 const fs = require("fs");
 const { token } = require("./config.json");
-const { Client, Collection, MessageEmbed} = require("discord.js");
+const { Client, Collection, MessageEmbed, Permissions} = require("discord.js");
 const path = require("path");
 const User = require("./source/user/index");
 const Server = require("./source/server/index");
+const customVC = require("./source/server/rentavc/index")
 const functions = require("./functions.js");
 
 //Random responses
@@ -14,7 +15,7 @@ const respWordlist= ["Hi :D",
 					"Who dares to ping me!? :rage:"]
 
 //Setup & load commands
-const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS"], partials: ["CHANNEL"]});
+const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_VOICE_STATES"], partials: ["CHANNEL"]});
 
 client.commands = new Collection();
 
@@ -113,17 +114,52 @@ client.on("messageCreate", (message) => {
 	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
 });
 
-client.on("channelDelete", (delChannel) => {
-	console.log(delChannel)
-	if (fs.existsSync(path.resolve(`./data/server/${delChannel.guild.id}/regData.json`))) {
-		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${delChannel.guild.id}/regData.json`))));
-		if (server.rentavcChannelID = delChannel.id) {
-			fs.writeFileSync(path.resolve(`./data/server/${delChannel.guild.id}/regData.json`), new Server({ id: delChannel.guild.id, name: delChannel.guild.name, suggestionChannelID: server.suggestionChannelID}).toString());
+client.on("channelDelete", (action) => {
+	if (fs.existsSync(path.resolve(`./data/server/${action.guild.id}/regData.json`))) {
+		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${action.guild.id}/regData.json`))));
+		//Check rent-a-vc channel
+		if (server.rentavcChannelID == action.id) {
+			fs.writeFileSync(path.resolve(`./data/server/${action.guild.id}/regData.json`), new Server({ id: action.guild.id, name: action.guild.name, suggestionChannelID: server.suggestionChannelID}).toString());
 			client.channels.fetch("950064195464986725").then((channel) => {
-				channel.send(`\`\`${user}\`\` deleted rent-a-vc channel on server: \`\`${delChannel.guild.name}\`\``)
+				channel.send(`rent-a-vc channel deleted on server: \`\`${action.guild.name}\`\``)
 				return;
 			});
 		} else { return };
+	};
+});
+
+client.on("voiceStateUpdate", async function (oldState, newState) {
+	if (fs.existsSync(path.resolve(`./data/server/${newState.guild.id}/regData.json`))) {
+		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${newState.guild.id}/regData.json`))));
+		// create new custom channel
+		if (server.rentavcChannelID == newState.channelId) {
+			const vcMember = newState.guild.members.cache.find(member => member.id == newState.id)
+			const vcUser = client.users.cache.find(user => user.id == newState.id)
+			const newChannel = await newState.guild.channels.create(`${vcUser.username}'s channel`, {
+				type: "GUILD_VOICE",
+				permissionOverwrites: [{
+					 id: newState.id,
+					 allow: [Permissions.FLAGS.MANAGE_CHANNELS],
+				}],
+			});
+			//move to channel
+			vcMember.voice.setChannel(newChannel)
+			//create new channels' .json file
+			if (!fs.existsSync(path.resolve(`./data/server/${newState.guild.id}/customVCs`))) {
+				fs.mkdir(`./data/server/${newState.guild.id}/customVCs`, (err) => {
+					if (err) throw err;
+					console.log("customVC dir created.")});
+			};
+			fs.writeFileSync(path.resolve(`data/server/${newState.guild.id}/customVCs/${newChannel.id}.json`), new customVC({ id: newChannel.id, owner: vcUser.username }).toString());
+		} else {
+			let dir = fs.readdirSync(`./data/server/${oldState.guild.id}/customVCs`);
+			for (const file of dir) {
+				if ((file == `${oldState.channelId}.json`) && (oldState.channel.members.size == 0) && (oldState.channelId != null)) {
+					oldState.channel.delete()
+					fs.unlinkSync(`./data/server/${oldState.guild.id}/customVCs/${oldState.channelId}.json`)
+				};
+			};
+		};
 	};
 });
 
