@@ -27,7 +27,7 @@ module.exports = {
 
                 interaction.client.channels.fetch("950064195464986725").then((channel) => {
                     interaction.reply({ content: `You banned: \`\`${user.username}\`\``, ephemeral: true })
-                    channel.send(`\`\`${interaction.member}\`\` banned: \`\`${user.username}\`\` on server: \`\`${interaction.guild.name}\`\``)
+                    channel.send(`\`\`${interaction.user.usernem}\`\` banned: \`\`${user.username}\`\` on server: \`\`${interaction.guild.name}\`\``)
                     return user.ban({ days: deleteDays, reason: banreason })
                 });
             } else { return interaction.reply("You don't have permissions to do that!") }

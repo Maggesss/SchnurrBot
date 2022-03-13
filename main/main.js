@@ -114,12 +114,13 @@ client.on("messageCreate", (message) => {
 });
 
 client.on("channelDelete", (delChannel) => {
-	if (fs.existsSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))) {
-		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))));
+	console.log(delChannel)
+	if (fs.existsSync(path.resolve(`./data/server/${delChannel.guild.id}/regData.json`))) {
+		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${delChannel.guild.id}/regData.json`))));
 		if (server.rentavcChannelID = delChannel.id) {
-			fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name, suggestionChannelID: server.suggestionChannelID}).toString());
+			fs.writeFileSync(path.resolve(`./data/server/${delChannel.guild.id}/regData.json`), new Server({ id: delChannel.guild.id, name: delChannel.guild.name, suggestionChannelID: server.suggestionChannelID}).toString());
 			client.channels.fetch("950064195464986725").then((channel) => {
-				channel.send(`\`\`${user}\`\` deleted rent-a-vc channel on server: \`\`${guild.name}\`\``)
+				channel.send(`\`\`${user}\`\` deleted rent-a-vc channel on server: \`\`${delChannel.guild.name}\`\``)
 				return;
 			});
 		} else { return };
