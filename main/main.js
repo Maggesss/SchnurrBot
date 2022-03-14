@@ -130,26 +130,28 @@ client.on("channelDelete", (action) => {
 
 client.on("voiceStateUpdate", async function (oldState, newState) {
 	if (fs.existsSync(path.resolve(`./data/server/${newState.guild.id}/regData.json`))) {
+		if (!fs.existsSync(path.resolve(`./data/server/${newState.guild.id}/customVCs`))) {
+			fs.mkdir(`./data/server/${newState.guild.id}/customVCs`, (err) => {
+				if (err) throw err;
+				console.log("customVC dir created.")});
+		};
 		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${newState.guild.id}/regData.json`))));
 		// create new custom channel
 		if (server.rentavcChannelID == newState.channelId) {
 			const vcMember = newState.guild.members.cache.find(member => member.id == newState.id)
 			const vcUser = client.users.cache.find(user => user.id == newState.id)
+			const customVcChannelCat = newState.guild.channels.cache.find(channel => channel.id == server.rentavcChannelID).parentId;
 			const newChannel = await newState.guild.channels.create(`${vcUser.username}'s channel`, {
 				type: "GUILD_VOICE",
 				permissionOverwrites: [{
-					 id: newState.id,
-					 allow: [Permissions.FLAGS.MANAGE_CHANNELS],
+					id: newState.id,
+					allow: [Permissions.FLAGS.MANAGE_CHANNELS],
 				}],
 			});
+			newChannel.setParent(customVcChannelCat);
 			//move to channel
-			vcMember.voice.setChannel(newChannel)
+			vcMember.voice.setChannel(newChannel);
 			//create new channels' .json file
-			if (!fs.existsSync(path.resolve(`./data/server/${newState.guild.id}/customVCs`))) {
-				fs.mkdir(`./data/server/${newState.guild.id}/customVCs`, (err) => {
-					if (err) throw err;
-					console.log("customVC dir created.")});
-			};
 			fs.writeFileSync(path.resolve(`data/server/${newState.guild.id}/customVCs/${newChannel.id}.json`), new customVC({ id: newChannel.id, owner: vcUser.username }).toString());
 		} else {
 			let dir = fs.readdirSync(`./data/server/${oldState.guild.id}/customVCs`);
