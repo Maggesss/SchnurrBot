@@ -36,7 +36,7 @@ client.once("ready", () => {
     const guilds = client.guilds.cache.map(guild => `${guild.id}: ${guild.name}`);
     console.log(guilds);
 	for (x in guilds) {
-		counter = counter + 1;
+		counter += 1;
 	};
 	console.log(`\nBot is currently in ${counter} guilds.\n`);
 });
@@ -52,7 +52,8 @@ client.on("interactionCreate", async interaction => {
 	if (!fs.existsSync(`./data/server/${interaction.guild.id}`)) {
 		fs.mkdir(`./data/server/${interaction.guild.id}`, (err) => {
 			if (err) throw err;
-			console.log("ServerDir created.")});
+			console.log("ServerDir created.");
+		});
 		fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name }).toString());
 	};
 
@@ -107,7 +108,8 @@ client.on("messageCreate", (message) => {
 		//create server folder if not already exists
 		fs.mkdir(`./data/server/${message.guild.id}`, (err) => {
 			if (err) throw err;
-			console.log("ServerDir created.")});
+			console.log("ServerDir created.");
+		});
 		fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}/regData.json`), new Server({ id: message.guild.id, name: message.guild.name }).toString());
 	};
 	//create userfile => no more afk
@@ -133,7 +135,8 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 		if (!fs.existsSync(path.resolve(`./data/server/${newState.guild.id}/customVCs`))) {
 			fs.mkdir(`./data/server/${newState.guild.id}/customVCs`, (err) => {
 				if (err) throw err;
-				console.log("customVC dir created.")});
+				console.log("customVC dir created.");
+			});
 		};
 		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${newState.guild.id}/regData.json`))));
 		// create new custom channel

@@ -1,6 +1,7 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const fs = require("fs");
 const path = require("path");
+const Playlist = require("../source/playlist/index")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -59,21 +60,35 @@ module.exports = {
    
     async execute(interaction) {
         try {
-            if (!fs.existsSync(`./data/playlists/${interaction.user.id}`)) {
-                fs.mkdir(`./data/playlists/${interaction.user.id}`);
-            }
+            if (!fs.existsSync(`./data/playlist/${interaction.user.id}`)) {
+                fs.mkdir(`./data/playlist/${interaction.user.id}`, (err) => {
+                    if (err) throw err;
+                    console.log("PlaylistDir created.");
+                });
+            };
             if (interaction.options.getSubcommand() === "addsong") {
                 const addUrl = interaction.options.getString("url");
                 const playlistNum = interaction.option.getNumber("plnum");
+
             } else if (interaction.options.getSubcommand() === "addplaylist") {
                 const name = interaction.options.getString("name");
+                const playlistdir = fs.readdirSync(`data/playlist/${interaction.user.id}`);
+                let playlistCount = 1
+                for (x in playlistdir) {
+                    playlistCount += 1;
+                };
+                fs.writeFileSync(path.resolve(`./data/playlist/${interaction.user.id}/${playlistCount}.json`), new Playlist({ id: message.author.id, name: message.author.tag }).toString());
+
             } else if (interaction.options.getSubcommand() === "remove") {
                 const songNum = interaction.options.getNumber("target");
+
             } else if (interaction.options.getSubcommand() === "show") {
                 const showMember = interaction.options.getMember("member");
                 const playlistNum = interaction.options.getNumber("playlistnum");
+
             } else if (interaction.options.getSubcommand() === "delete") {
                 const playlistNum = interaction.options.getNumber("playlistnumber");
+
             } else if (interaction.options.getSubcommand() === "showall") {
                 const showallUser = interactions.options.getMember("user");
             };
