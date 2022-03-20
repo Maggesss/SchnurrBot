@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const functions = require("../../functions")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -7,7 +8,7 @@ module.exports = {
         
 	async execute(interaction) {
         try {
-            if (interaction.user.id == "444460699025014784") {
+            if (functions.isHelper(interaction.user.id) == true) {
                 client.destroy();
             } else { return interaction.reply({ content: `You don't have permissions to do that!`, ephemeral: true })};
         } catch (error) {

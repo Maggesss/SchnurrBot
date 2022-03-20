@@ -3,6 +3,7 @@ const { Permissions } = require('discord.js');
 const path = require("path");
 const fs = require("fs");
 const Server = require("../../source/server/index");
+const functions = require("../../functions")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,7 +12,7 @@ module.exports = {
             
     async execute(interaction) {
         try {
-            if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS) || (interaction.user.id == "444460699025014784")) {
+            if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS) || (functions.isHelper(interaction.user.id) == true)) {
                 if (fs.existsSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))) {
                     const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))));
                     if (server.rentavcChannelID == "None") {

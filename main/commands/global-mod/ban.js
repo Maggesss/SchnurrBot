@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { Permissions } = require('discord.js');
+const functions = require("../../functions")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -20,7 +21,7 @@ module.exports = {
             
     async execute(interaction) {
         try {
-            if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS) || (interaction.user.id == "444460699025014784")) {
+            if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS) || (functions.isHelper(interaction.user.id) == true)) {
                 const user = interaction.options.getMember("target");
                 const deleteDays = interaction.options.getNumber("days")
                 const banreason = interaction.options.getString("banreason")

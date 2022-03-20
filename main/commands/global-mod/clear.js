@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { Permissions } = require('discord.js');
+const functions = require("../../functions")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -10,7 +11,7 @@ module.exports = {
 	async execute(interaction) {
 		const amount = interaction.options.getInteger("amount");
 		try {
-            if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES) || (interaction.user.id == "444460699025014784")) {
+            if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES) || (functions.isHelper(interaction.user.id) == true)) {
 				if ((amount <= 1) || (amount > 100)) {
 					return interaction.reply({ content: "You need to input a number between 1 and 99.", ephemeral: true });
 				};

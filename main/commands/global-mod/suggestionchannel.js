@@ -3,6 +3,7 @@ const fs = require("fs");
 const path = require("path");
 const Server = require("../../source/server/index");
 const { Permissions } = require('discord.js');
+const functions = require("../../functions")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -15,7 +16,7 @@ module.exports = {
             
 	async execute(interaction) {
 		const channel = interaction.options.getString("channel");
-        if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS)) {
+        if (interaction.member.permissions.has(Permissions.FLAGS.MANAGE_CHANNELS) || (functions.isHelper(interaction.user.id) == true)) {
                 if (fs.existsSync(path.resolve(`../../data/server/${interaction.guild.id}/regData.json`))) {
                     const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`../../data/server/${interaction.guild.id}/regData.json`))))
                     fs.writeFileSync(path.resolve(`../../data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, suggestionChannelID: channel, name: interaction.guild.name, rentavcChannelID: server.rentavcChannelID}).toString());

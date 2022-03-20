@@ -1,5 +1,6 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const { Permissions } = require('discord.js');
+const functions = require("../../functions")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -12,7 +13,7 @@ module.exports = {
             
 	async execute(interaction) {
         try {
-            if (interaction.client.permissions.has(Permissions.FLAGS.KICK_MEMBERS) || (interaction.user.id == "444460699025014784")) {
+            if (interaction.client.permissions.has(Permissions.FLAGS.KICK_MEMBERS) || (functions.isHelper(interaction.user.id) == true)) {
                 const user = interaction.options.getMember("target");
                 interaction.client.channels.fetch("950064195464986725").then((channel) => {
                     interaction.reply({ content: `You kicked: \`\`${user.username}\`\``, ephemeral: true })

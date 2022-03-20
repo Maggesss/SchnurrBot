@@ -1,4 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
+const functions = require("../../functions")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -11,7 +12,7 @@ module.exports = {
 
 	async execute(interaction) {
         try {
-            if (interaction.user.id == "444460699025014784") {
+            if (functions.isHelper(interaction.user.id) == true) {
                 const newName = interaction.options.getString("nick");
                 await interaction.client.user.setUsername(newName)
                 console.log(`Changed name to: "${newName}"`)
