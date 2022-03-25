@@ -145,8 +145,8 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 			const vcUser = client.users.cache.find(user => user.id == newState.id);
 			const customVcChannelCat = newState.guild.channels.cache.find(channel => channel.id == server.rentavcChannelID).parentId;
 			const newChannel = await newState.guild.channels.create(`🔊 ${vcUser.username}'s channel`, { type: "GUILD_VOICE", });
+			await newChannel.setParent(customVcChannelCat);
 			await newChannel.permissionOverwrites.create(vcUser.id, { MANAGE_CHANNELS: true });
-			newChannel.setParent(customVcChannelCat);
 			//move to channel
 			vcMember.voice.setChannel(newChannel);
 			//create new channels' .json file
