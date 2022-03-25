@@ -80,7 +80,7 @@ client.on("messageCreate", (message) => {
     if (message.channel.type === 'DM') {
         const dmLogEmbed = new MessageEmbed()
             .setColor("RANDOM")
-            .setTitle(`${message.author.tag} dmed the bot and said: `)
+            .setTitle(`${message.author.tag}: `)
             .setDescription(message.content)
             .setFooter({ text: `User's id: ${message.author.id}` });
 
@@ -116,17 +116,17 @@ client.on("messageCreate", (message) => {
 	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
 });
 
-client.on("channelDelete", (action) => {
+client.on("channelDelete", async function (action) {
 	if (fs.existsSync(path.resolve(`./data/server/${action.guild.id}/regData.json`))) {
 		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${action.guild.id}/regData.json`))));
 		//Check rent-a-vc channel
 		if (server.rentavcChannelID == action.id) {
 			fs.writeFileSync(path.resolve(`./data/server/${action.guild.id}/regData.json`), new Server({ id: action.guild.id, name: action.guild.name, suggestionChannelID: server.suggestionChannelID}).toString());
 			client.channels.fetch("950064195464986725").then((channel) => {
-				channel.send(`rent-a-vc channel deleted on server: \`\`${action.guild.name}\`\``)
+				channel.send(`rent-a-vc channel deleted on server: \`\`${action.guild.name}\`\``);
 				return;
 			});
-		} else { return };
+		} else { return; };
 	};
 });
 
@@ -141,16 +141,11 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${newState.guild.id}/regData.json`))));
 		// create new custom channel
 		if (server.rentavcChannelID == newState.channelId) {
-			const vcMember = newState.guild.members.cache.find(member => member.id == newState.id)
-			const vcUser = client.users.cache.find(user => user.id == newState.id)
+			const vcMember = newState.guild.members.cache.find(member => member.id == newState.id);
+			const vcUser = client.users.cache.find(user => user.id == newState.id);
 			const customVcChannelCat = newState.guild.channels.cache.find(channel => channel.id == server.rentavcChannelID).parentId;
-			const newChannel = await newState.guild.channels.create(`🔊 ${vcUser.username}'s channel`, {
-				type: "GUILD_VOICE",
-				permissionOverwrites: [{
-					id: newState.id,
-					allow: [Permissions.FLAGS.MANAGE_CHANNELS],
-				}],
-			});
+			const newChannel = await newState.guild.channels.create(`🔊 ${vcUser.username}'s channel`, { type: "GUILD_VOICE", });
+			await newChannel.permissionOverwrites.create(vcUser.id, { MANAGE_CHANNELS: true });
 			newChannel.setParent(customVcChannelCat);
 			//move to channel
 			vcMember.voice.setChannel(newChannel);
@@ -160,8 +155,8 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 			let dir = fs.readdirSync(`./data/server/${oldState.guild.id}/customVCs`);
 			for (const file of dir) {
 				if ((file == `${oldState.channelId}.json`) && (oldState.channel.members.size == 0) && (oldState.channelId != null)) {
-					oldState.channel.delete()
-					fs.unlinkSync(`./data/server/${oldState.guild.id}/customVCs/${oldState.channelId}.json`)
+					oldState.channel.delete();
+					fs.unlinkSync(`./data/server/${oldState.guild.id}/customVCs/${oldState.channelId}.json`);
 				};
 			};
 		};
