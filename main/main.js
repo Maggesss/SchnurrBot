@@ -6,6 +6,8 @@ const User = require("./source/user/index");
 const Server = require("./source/server/index");
 const customVC = require("./source/server/rentavc/index")
 const functions = require("./functions.js");
+const { REST } = require("@discordjs/rest");
+const { Routes } = require("discord-api-types/v9");
 
 //Random responses
 const respWordlist= ["Hi :D",
@@ -18,6 +20,8 @@ const respWordlist= ["Hi :D",
 const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_VOICE_STATES"], partials: ["CHANNEL"]});
 
 client.commands = new Collection();
+
+const rest = new REST({ version: "9" }).setToken(token);
 
 const commandFolders = fs.readdirSync("./commands");
 
@@ -114,6 +118,24 @@ client.on("messageCreate", (message) => {
 	};
 	//create userfile => no more afk
 	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
+});
+
+client.on("guildCreate", async function (guild) {
+	const standartCommands = [];
+
+	for (const dir of commandFolders) {
+		if (dir.startsWith("global") == true) {
+			const standartCommandFiles = fs.readdirSync(`commands/${dir}`).filter(file => file.endsWith(".js"));
+			
+			for (const file of standartCommandFiles) {
+				const standartCommand = require(`../commands/${dir}/${file}`);
+				standartCommands.push(standartCommand.data.toJSON());
+			};
+		};
+	};
+	rest.put(Routes.applicationGuildCommands(client.id, guild.id), { body: standartCommands })
+			.then(() => console.log(`Successfully registered application commands for guildID: ${x}`))
+			.catch(console.error);
 });
 
 client.on("channelDelete", async function (action) {
