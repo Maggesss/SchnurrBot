@@ -126,7 +126,7 @@ client.on("guildCreate", async function (guild) {
 	for (const dir of commandFolders) {
 		if (dir.startsWith("global") == true) {
 			const standartCommandFiles = fs.readdirSync(`commands/${dir}`).filter(file => file.endsWith(".js"));
-			
+
 			for (const file of standartCommandFiles) {
 				const standartCommand = require(`../commands/${dir}/${file}`);
 				standartCommands.push(standartCommand.data.toJSON());
@@ -134,7 +134,7 @@ client.on("guildCreate", async function (guild) {
 		};
 	};
 	rest.put(Routes.applicationGuildCommands(client.id, guild.id), { body: standartCommands })
-			.then(() => console.log(`Successfully registered application commands for guildID: ${x}`))
+			.then(() => console.log(`Successfully registered application commands for guildID: ${guild.name}`))
 			.catch(console.error);
 });
 
