@@ -1,5 +1,5 @@
 const fs = require("fs");
-const { token } = require("./config.json");
+const { token, clientId } = require("./config.json");
 const { Client, Collection, MessageEmbed, Permissions} = require("discord.js");
 const path = require("path");
 const User = require("./source/user/index");
@@ -36,13 +36,13 @@ for (const dir of commandFolders) {
 //list guilds
 client.once("ready", () => {
 	let counter = 0;
-	console.log("Ready!");
-    const guilds = client.guilds.cache.map(guild => `${guild.id}: ${guild.name}`);
-    console.log(guilds);
+    const guilds = client.guilds.cache.map(guild => `${guild.id}: ${guild.name}\n`);
 	for (x in guilds) {
 		counter += 1;
 	};
-	console.log(`\nBot is currently in ${counter} guilds.\n`);
+	client.channels.fetch("957431154158489670").then((channel) => {
+		channel.send(`Ready!\n${guilds}\n\nBot is currently in ${counter} guilds.\n`)
+	});
 });
 
 // /command listener
@@ -121,20 +121,20 @@ client.on("messageCreate", (message) => {
 });
 
 client.on("guildCreate", async function (guild) {
-	const standartCommands = [];
+	let standartCommands = [];
 
 	for (const dir of commandFolders) {
 		if (dir.startsWith("global") == true) {
 			const standartCommandFiles = fs.readdirSync(`commands/${dir}`).filter(file => file.endsWith(".js"));
 
 			for (const file of standartCommandFiles) {
-				const standartCommand = require(`../commands/${dir}/${file}`);
+				const standartCommand = require(`./commands/${dir}/${file}`);
 				standartCommands.push(standartCommand.data.toJSON());
 			};
 		};
 	};
-	rest.put(Routes.applicationGuildCommands(client.id, guild.id), { body: standartCommands })
-			.then(() => console.log(`Successfully registered application commands for guildID: ${guild.name}`))
+	rest.put(Routes.applicationGuildCommands(clientId, guild.id), { body: standartCommands })
+			.then(() => console.log(`Successfully registered standart application commands for guild: ${guild.name}`))
 			.catch(console.error);
 });
 
