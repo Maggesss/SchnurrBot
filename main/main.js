@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { token, clientId } = require("./config.json");
-const { Client, Collection, MessageEmbed, Permissions} = require("discord.js");
+const { Client, Collection, MessageEmbed } = require("discord.js");
 const path = require("path");
 const User = require("./source/user/index");
 const Server = require("./source/server/index");
@@ -36,7 +36,7 @@ for (const dir of commandFolders) {
 //list guilds
 client.once("ready", () => {
 	let counter = 0;
-    const guilds = client.guilds.cache.map(guild => `${guild.id}: ${guild.name}\n`);
+    const guilds = client.guilds.cache.map(guild => `\n${guild.id}: ${guild.name}`);
 	for (x in guilds) {
 		counter += 1;
 	};
