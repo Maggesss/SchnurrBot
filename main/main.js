@@ -120,7 +120,10 @@ client.on("messageCreate", (message) => {
 	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
 });
 
+
+//join guild listener
 client.on("guildCreate", async function (guild) {
+	//list basic commands
 	let standartCommands = [];
 
 	for (const dir of commandFolders) {
@@ -133,11 +136,13 @@ client.on("guildCreate", async function (guild) {
 			};
 		};
 	};
+	//deploy basic commands
 	rest.put(Routes.applicationGuildCommands(clientId, guild.id), { body: standartCommands })
 			.then(() => console.log(`Successfully registered standart application commands for guild: ${guild.name}`))
 			.catch(console.error);
 });
 
+//listen to channel deletions
 client.on("channelDelete", async function (action) {
 	if (fs.existsSync(path.resolve(`./data/server/${action.guild.id}/regData.json`))) {
 		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${action.guild.id}/regData.json`))));
@@ -152,8 +157,11 @@ client.on("channelDelete", async function (action) {
 	};
 });
 
+//check voice state updates
 client.on("voiceStateUpdate", async function (oldState, newState) {
+	//check if server config is found in "data"
 	if (fs.existsSync(path.resolve(`./data/server/${newState.guild.id}/regData.json`))) {
+		//create custom-vc folder if not there already
 		if (!fs.existsSync(path.resolve(`./data/server/${newState.guild.id}/customVCs`))) {
 			fs.mkdir(`./data/server/${newState.guild.id}/customVCs`, (err) => {
 				if (err) throw err;
@@ -161,7 +169,7 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 			});
 		};
 		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${newState.guild.id}/regData.json`))));
-		// create new custom channel
+		// create new custom channel if rent-a-vd channel is used
 		if (server.rentavcChannelID == newState.channelId) {
 			const vcMember = newState.guild.members.cache.find(member => member.id == newState.id);
 			const vcUser = client.users.cache.find(user => user.id == newState.id);
@@ -174,6 +182,7 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 			//create new channels' .json file
 			fs.writeFileSync(path.resolve(`data/server/${newState.guild.id}/customVCs/${newChannel.id}.json`), new customVC({ id: newChannel.id, owner: vcUser.username }).toString());
 		} else {
+			//check if custom-vc is empty, if so, delete channel and file
 			let dir = fs.readdirSync(`./data/server/${oldState.guild.id}/customVCs`);
 			for (const file of dir) {
 				if ((file == `${oldState.channelId}.json`) && (oldState.channel.members.size == 0) && (oldState.channelId != null)) {
