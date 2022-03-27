@@ -12,7 +12,7 @@ module.exports = {
             .setRequired(true))
         .addNumberOption(option => option
             .setName("days")
-            .setDescription("The days where messages schould be deleted")
+            .setDescription("The days where messages schould be deleted (must be <7)")
             .setRequired(true))
         .addStringOption(option => option
             .setName("banreason")
@@ -21,13 +21,13 @@ module.exports = {
             
     async execute(interaction) {
         try {
-            if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS) || (functions.isHelper(interaction.user.id) == true)) {
+            const deleteDays = interaction.options.getNumber("days")
+            if (interaction.member.permissions.has(Permissions.FLAGS.BAN_MEMBERS) || (functions.isHelper(interaction.user.id) == true) && (deleteDays < 7)) {
                 const user = interaction.options.getMember("target");
-                const deleteDays = interaction.options.getNumber("days")
                 const banreason = interaction.options.getString("banreason")
 
                 interaction.client.channels.fetch("950064195464986725").then((channel) => {
-                    interaction.reply({ content: `You banned: \`\`${user.username}\`\``, ephemeral: true })
+                    interaction.reply({ content: `You banned: \`\`${user.user.username}\`\``, ephemeral: true })
                     channel.send(`\`\`${interaction.user.username}\`\` banned: \`\`${user.user.username}\`\` on server: \`\`${interaction.guild.name}\`\``)
                     return user.ban({ days: deleteDays, reason: banreason })
                 });
