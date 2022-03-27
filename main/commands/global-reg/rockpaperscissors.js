@@ -10,7 +10,11 @@ module.exports = {
 		.setDescription("Play rock-paper-scissors against me!")
 		.addStringOption(option => option
             .setName("choice")
-            .setDescription("Put 'rock', 'paper' or 'scissors'.")),
+            .setDescription("Choose 'rock', 'paper' or 'scissors'.")
+            .setRequired(true)
+            .addChoice("rock", "rock")
+            .addChoice("paper", "paper")
+            .addChoice("scissors", "scissors")),
             
 	async execute(interaction) {
 		const choice_user = interaction.options.getString("choice");
