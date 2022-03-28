@@ -21,8 +21,8 @@ module.exports = {
         const choice_bot = getRndInteger(0, 2);
         const choice_array = ["rock", "paper", "scissors"];
         try { 
-            if (choice_user.toLowerCase() == ("rock" || "paper" || "scissors")) {
-                if ((choice_user.toLowerCase() && choice_array[choice_bot]) == ("rock" || "paper" || "scissors")) {
+            if (choice_array.includes(choice_user.toLowerCase())) {
+                if (choice_user.toLowerCase() == choice_array[choice_bot]) {
                     return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot chose **${choice_array[choice_bot]}**! **Tie!**`);
                 } else if (((choice_user.toLowerCase() == "rock") && (choice_bot == 2)) || ((choice_user.toLowerCase() == "paper") && (choice_bot == 0)) || ((choice_user.toLowerCase() == "scissors") && (choice_bot == 1))) {
                     return interaction.reply(`Your choice was: **${choice_user.toLowerCase()}**. The bot chose **${choice_array[choice_bot]}**! **You win!**`);
