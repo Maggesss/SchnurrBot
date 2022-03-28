@@ -1,8 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-
-function getRndInteger(min, max) {
-    return Math.floor(Math.random() * (max - min + 1) ) + min;
-};
+const functions = require("../../functions.js")
 
 module.exports = {
 	data: new SlashCommandBuilder()
@@ -18,7 +15,7 @@ module.exports = {
             
 	async execute(interaction) {
 		const choice_user = interaction.options.getString("choice");
-        const choice_bot = getRndInteger(0, 2);
+        const choice_bot = functions.getRandomIntInclusive(0, 2)
         const choice_array = ["rock", "paper", "scissors"];
         try { 
             if (choice_array.includes(choice_user.toLowerCase())) {
