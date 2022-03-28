@@ -52,11 +52,10 @@ client.on("interactionCreate", async interaction => {
 	if(!fs.existsSync(path.resolve(`./data/user/${interaction.user.id}.json`))) {
 		fs.writeFileSync(path.resolve(`./data/user/${interaction.user.id}.json`), new User({ id: interaction.user.id, name: interaction.user.tag }).toString());
 	};
-	//create server folder if not already there
+
 	if (!fs.existsSync(`./data/server/${interaction.guild.id}`)) {
 		fs.mkdir(`./data/server/${interaction.guild.id}`, (err) => {
 			if (err) throw err;
-			console.log("ServerDir created.");
 		});
 		fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name }).toString());
 	};
@@ -108,14 +107,7 @@ client.on("messageCreate", (message) => {
 				};
 			};
 		};
-	} else if (!fs.existsSync(`./data/server/${message.guild.id}`)) {
-		//create server folder if not already exists
-		fs.mkdir(`./data/server/${message.guild.id}`, (err) => {
-			if (err) throw err;
-			console.log("ServerDir created.");
-		});
-		fs.writeFileSync(path.resolve(`./data/server/${message.guild.id}/regData.json`), new Server({ id: message.guild.id, name: message.guild.name }).toString());
-	};
+	}
 	//create userfile => no more afk
 	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
 });
@@ -140,6 +132,14 @@ client.on("guildCreate", async function (guild) {
 	rest.put(Routes.applicationGuildCommands(clientId, guild.id), { body: standartCommands })
 			.then(() => console.log(`Successfully registered standart application commands for guild: ${guild.name}`))
 			.catch(console.error);
+
+	//create server folder if not already exists
+	if (!fs.existsSync(`./data/server/${guild.id}`)) {
+		fs.mkdir(`./data/server/${guild.id}`, (err) => {
+			if (err) throw err;
+		});
+		fs.writeFileSync(path.resolve(`./data/server/${guild.id}/regData.json`), new Server({ id: guild.id, name: guild.name }).toString());
+	};
 });
 
 //listen to channel deletions
