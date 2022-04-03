@@ -7,14 +7,18 @@ module.exports = {
 		.setDescription("Create a suggestion to Magges#4062.")
 		.addStringOption(option => option
             .setName("type")
-            .setDescription("Select the type of your suggestion. (Command, bot funtion, etc.)")
-            .setRequired(true))
+            .setDescription("Select the type of your suggestion.")
+            .setRequired(true)
+            .addChoice("bug report", "bug report")
+            .addChoice("command suggestion", "command suggestion")
+            .addChoice("feedback", "feedback")
+            .addChoice("other", "other"))
         .addStringOption(option => option
             .setName("name")
             .setDescription("Name your suggestion.")
             .setRequired(true))
         .addStringOption(option => option
-            .setName("suggestion")
+            .setName("description")
             .setDescription("Describe your suggestion.")
             .setRequired(true)),
 
