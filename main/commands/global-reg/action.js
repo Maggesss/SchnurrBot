@@ -1,5 +1,4 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
-const { MessageEmbed } = require("discord.js");
 const fetch = require("node-fetch");
 const { tenorKey } = require("../../config.json")
 
@@ -34,14 +33,9 @@ module.exports = {
         const res = await fetch(url);
         const result = await res.json();
         const gif = Math.floor(Math.random() * result.results.length);
-        const readyGif = `${result.results[gif].itemurl}.gif`
-        console.log(readyGif)
+        const readyGif = `${result.results[gif].url}`
 
-        const embed = new MessageEmbed()
-            .setColor("#0099ff")
-            .setDescription(`${term} <@${member.user.id}>`)
-            .setImage(readyGif);
-
-        return interaction.reply({ embeds: [embed] });
+        interaction.reply(`${term} <@${member.user.id}>`);
+        return interaction.channel.send(`${readyGif}`);
 	}
 };
