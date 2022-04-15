@@ -17,7 +17,7 @@ module.exports = {
                     const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`))));
                     if (server.rentavcChannelID == "None") {
                         const newChannel = await interaction.guild.channels.create("rent-a-vc", { type: "GUILD_VOICE" });
-                        fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name, rentavcChannelID: newChannel.id, suggestionChannelID: server.suggestionChannelID}).toString());
+                        fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name, rentavcChannelID: newChannel.id, suggestionChannelID: server.suggestionChannelID, ticketchannel: server.ticketchannel, ticketmessage: server.ticketmessage}).toString());
                         
                         interaction.client.channels.fetch("950064195464986725").then((channel) => {
                             channel.send(`\`\`${interaction.user.username}\`\` created new rent-a-vc channel on server: \`\`${interaction.guild.name}\`\``)

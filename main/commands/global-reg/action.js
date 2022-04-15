@@ -29,13 +29,13 @@ module.exports = {
 		const term = await interaction.options.getString("type");
         const member = interaction.options.getMember("target");
 
-        const url = `https://g.tenor.com/v1/search?q=anime_${term}&key=${tenorKey}&limit=10`
+        const url = `https://g.tenor.com/v1/search?q=anime%20${term}&key=${tenorKey}&limit=10`
         const res = await fetch(url);
         const result = await res.json();
         const gif = Math.floor(Math.random() * result.results.length);
         const readyGif = `${result.results[gif].url}`
 
-        interaction.reply(`${term} <@${member.user.id}>`);
+        await interaction.reply(`${term} <@${member.user.id}>`);
         return interaction.channel.send(`${readyGif}`);
 	}
 };
