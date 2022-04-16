@@ -17,7 +17,7 @@ const respWordlist= ["Hi :D",
 					"Who dares to ping me!? :rage:"]
 
 //Setup & load commands
-const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_VOICE_STATES"], partials: ["CHANNEL"]});
+const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_VOICE_STATES"], partials: ['MESSAGE', 'CHANNEL', 'REACTION']});
 
 client.commands = new Collection();
 
@@ -148,7 +148,7 @@ client.on("channelDelete", async function (action) {
 		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${action.guild.id}/regData.json`))));
 		//Check rent-a-vc channel
 		if (server.rentavcChannelID == action.id) {
-			fs.writeFileSync(path.resolve(`./data/server/${action.guild.id}/regData.json`), new Server({ id: action.guild.id, name: action.guild.name, suggestionChannelID: server.suggestionChannelID}).toString());
+			fs.writeFileSync(path.resolve(`./data/server/${action.guild.id}/regData.json`), new Server({ id: action.guild.id, name: action.guild.name, suggestionChannelID: server.suggestionChannelID, ticketchannel: server.ticketchannel, ticketmessage: server.ticketmessage}).toString());
 			client.channels.fetch("950064195464986725").then((channel) => {
 				channel.send(`rent-a-vc channel deleted on server: \`\`${action.guild.name}\`\``);
 				return;
@@ -192,6 +192,30 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 			};
 		};
 	};
+});
+
+//check reaction updates
+client.on("messageReactionAdd", async function (reaction, user) {
+	if (reaction.partial) {
+		try {
+			await reaction.fetch();
+		} catch (error) {
+			console.error('Something went wrong when fetching the message:', error);
+			return;
+		};
+	};
+	if (!fs.existsSync(path.resolve(`./data/server/${reaction.message.guildId}/regData.json`))) { return; };
+
+	const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${reaction.message.guildId}/regData.json`))));
+	if ((reaction.message.channelId == server.ticketchannel) && (reaction.message.id == server.ticketmessage) && (!(user.id == client.user.id))) {
+		const customVcChannelCat = reaction.message.guild.channels.cache.find(channel => channel.id == server.ticketchannel).parentId;
+		const newChannel = await reaction.message.guild.channels.create(`${user.username}'s ticket`, { type: "GUILD_TEXT", });
+		await newChannel.setParent(customVcChannelCat);
+		await newChannel.permissionOverwrites.create(reaction.message.guildId, { VIEW_CHANNEL: false })
+		await newChannel.permissionOverwrites.create(user.id, { VIEW_CHANNEL: true });
+		reaction.users.remove(user.id);
+	};
+
 });
 
 client.login(token);
