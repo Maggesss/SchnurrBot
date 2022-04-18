@@ -25,8 +25,9 @@ module.exports = {
 	async execute(interaction) {
 		const type = interaction.options.getString("type");
         const name = interaction.options.getString("name");
-        const suggestion = interaction.options.getString("suggestion");
+        const suggestion = interaction.options.getString("description");
         const author = interaction.user.tag;
+
 
         const embed = new MessageEmbed()
             .setColor("#0099ff")
@@ -34,12 +35,12 @@ module.exports = {
             .setDescription(`${type}`)
             .addFields(
                 { name: "Name:", value: name },
-                { name: "Suggestion:", value: suggestion},
+                { name: "Suggestion:", value: suggestion}
             )
             .setTimestamp()
             .setFooter({ text: "©2022 Magges" });
 
-        interaction.client.channels.cache.get("949777598714626069").send({ embeds: [embed] }).then(sentMessage => {
+        interaction.client.channels.cache.get("965667557199720468").send({ embeds: [embed] }).then(sentMessage => {
             sentMessage.react("✅");
             sentMessage.react("❌");
             return interaction.reply({ content: `Suggestion sent.`, ephemeral: true });

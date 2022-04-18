@@ -1,6 +1,6 @@
 const fs = require("fs");
 const { token, clientId } = require("./config.json");
-const { Client, Collection, MessageEmbed } = require("discord.js");
+const { Client, Collection, MessageEmbed, Permissions } = require("discord.js");
 const path = require("path");
 const User = require("./source/user/index");
 const Server = require("./source/server/index");
@@ -214,8 +214,12 @@ client.on("messageReactionAdd", async function (reaction, user) {
 		await newChannel.permissionOverwrites.create(reaction.message.guildId, { VIEW_CHANNEL: false })
 		await newChannel.permissionOverwrites.create(user.id, { VIEW_CHANNEL: true });
 		reaction.users.remove(user.id);
-	};
 
+		client.channels.fetch("950064195464986725").then((channel) => {
+			channel.send(`\`\`${user.username}\`\` created a ticket on server: \`\`${reaction.message.guild.name}\`\``);
+			return;
+		});
+	};
 });
 
 client.login(token);
