@@ -33,7 +33,7 @@ for (const dir of commandFolders) {
 	};
 };
 
-//list guilds
+//list guilds, set status
 client.once("ready", () => {
 	let counter = 0;
     const guilds = client.guilds.cache.map(guild => `\n${guild.id}: ${guild.name}`);
@@ -43,6 +43,7 @@ client.once("ready", () => {
 	client.channels.fetch("957431154158489670").then((channel) => {
 		channel.send(`Ready!\n${guilds}\n\nBot is currently in ${counter} guilds.\n`)
 	});
+	client.user.setPresence({ activities: [{ name: ` on ${counter} guilds. ` }], status: `online` });
 });
 
 // /command listener
@@ -130,8 +131,10 @@ client.on("guildCreate", async function (guild) {
 	};
 	//deploy basic commands
 	rest.put(Routes.applicationGuildCommands(clientId, guild.id), { body: standartCommands })
-			.then(() => console.log(`Successfully registered standart application commands for guild: ${guild.name}`))
-			.catch(console.error);
+			.then(() => 
+			client.channels.fetch("950064195464986725").then((channel) => {
+				channel.send(`Successfully registered standart application commands for guild: \`\`${guild.name}\`\``)
+			.catch(console.error)}))
 
 	//create server folder if not already exists
 	if (!fs.existsSync(`./data/server/${guild.id}`)) {
@@ -140,6 +143,13 @@ client.on("guildCreate", async function (guild) {
 		});
 		fs.writeFileSync(path.resolve(`./data/server/${guild.id}/regData.json`), new Server({ id: guild.id, name: guild.name }).toString());
 	};
+	//update status
+	let counter = 0;
+    const guilds = client.guilds.cache.map(guild => `\n${guild.id}: ${guild.name}`);
+	for (x in guilds) {
+		counter += 1;
+	};
+	client.user.setPresence({ activities: [{ name: ` on ${counter} guilds. ` }], status: `online` });
 });
 
 //listen to channel deletions
