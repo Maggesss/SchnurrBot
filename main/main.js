@@ -61,6 +61,12 @@ client.on("interactionCreate", async interaction => {
 		fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name }).toString());
 	};
 
+	if (!fs.existsSync(`./data/server/${interaction.guild.id}/birthdays`)) {
+		fs.mkdir(`./data/server/${interaction.guild.id}/birthdays`, (err) => {
+			if (err) throw err;
+		});
+	};
+
 	const command = client.commands.get(interaction.commandName);
 
 	if (!command) return;
@@ -175,7 +181,6 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 		if (!fs.existsSync(path.resolve(`./data/server/${newState.guild.id}/customVCs`))) {
 			fs.mkdir(`./data/server/${newState.guild.id}/customVCs`, (err) => {
 				if (err) throw err;
-				console.log("customVC dir created.");
 			});
 		};
 		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${newState.guild.id}/regData.json`))));
