@@ -228,8 +228,12 @@ client.on("messageReactionAdd", async function (reaction, user) {
 		await newChannel.setParent(customVcChannelCat);
 		await newChannel.permissionOverwrites.create(reaction.message.guildId, { VIEW_CHANNEL: false })
 		await newChannel.permissionOverwrites.create(user.id, { VIEW_CHANNEL: true });
+		await newChannel.permissionOverwrites.create(user.id, { MANAGE_CHANNELS: true });
 		await reaction.message.guild.members.fetch().then((members) =>
-			members.forEach((member) => {if (member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {newChannel.permissionOverwrites.create(member.user.id, { VIEW_CHANNEL: true });}}),
+			members.forEach((member) => {if (member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
+				newChannel.permissionOverwrites.create(member.user.id, { VIEW_CHANNEL: true });
+				newChannel.permissionOverwrites.create(member.user.id, { MANAGE_CHANNELS: true });
+			}}),
 		);
 		reaction.users.remove(user.id);
 
