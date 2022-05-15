@@ -4,7 +4,7 @@ const { Client, Collection, MessageEmbed, Permissions } = require("discord.js");
 const path = require("path");
 const User = require("./source/user/index");
 const Server = require("./source/server/index");
-const customVC = require("./source/server/rentavc/index")
+const customVC = require("./source/server/rentavc/index");
 const functions = require("./functions.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
@@ -46,7 +46,7 @@ client.once("ready", () => {
 	client.user.setPresence({ activities: [{ name: ` on ${counter} guilds. ` }], status: `online` });
 });
 
-// /command listener
+//command listener
 client.on("interactionCreate", async interaction => {
 	if (!interaction.isCommand()) return;
 	//create userfile if not already exists
@@ -228,6 +228,9 @@ client.on("messageReactionAdd", async function (reaction, user) {
 		await newChannel.setParent(customVcChannelCat);
 		await newChannel.permissionOverwrites.create(reaction.message.guildId, { VIEW_CHANNEL: false })
 		await newChannel.permissionOverwrites.create(user.id, { VIEW_CHANNEL: true });
+		await reaction.message.guild.members.fetch().then((members) =>
+			members.forEach((member) => {if (member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {newChannel.permissionOverwrites.create(member.user.id, { VIEW_CHANNEL: true });}}),
+		);
 		reaction.users.remove(user.id);
 
 		client.channels.fetch("950064195464986725").then((channel) => {
