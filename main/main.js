@@ -226,7 +226,7 @@ client.on("messageReactionAdd", async function (reaction, user) {
 
 	const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${reaction.message.guildId}/regData.json`))));
 	if ((reaction.message.channelId == server.ticketchannel) && (reaction.message.id == server.ticketmessage) && (!(user.id == client.user.id))) {
-		const exampleChannel = client.guilds.cache.get("949777471811768330").channels.cache.get("949777558860349481");
+		const exampleChannel = client.guilds.cache.get("949777471811768330").channels.cache.get("986285340576841778");
 		const TicketChannelCat = reaction.message.guild.channels.cache.find(channel => channel.id == server.ticketchannel).parentId;
 		const newTicket = await reaction.message.guild.channels.create(`${user.username}'s ticket`, { type: "GUILD_TEXT", });
 		await newTicket.setParent(TicketChannelCat);
