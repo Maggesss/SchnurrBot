@@ -9,11 +9,12 @@ module.exports = {
 
 	async execute(interaction) {
         try {
-            const url = `https://g.tenor.com/v1/search?q=anime%20boobs&key=${tenorKey}&limit=10`;
+            const url = `https://g.tenor.com/v1/search?q=anime%20boobs&key=${tenorKey}&limit=10`
             const res = await fetch(url);
             const result = await res.json();
-            const gif = Math.floor(Math.random() * result.results.lenth);
-            const readyGif = `${result.results[gif].url}` ;
+            const gif = Math.floor(Math.random() * result.results.length);
+            const readyGif = `${result.results[gif].url}`
+
             return interaction.reply({ content: `${readyGif}`, ephemeral: false });
         } catch (error) {
             console.error(error);
