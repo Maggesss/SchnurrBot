@@ -231,6 +231,7 @@ client.on("messageReactionAdd", async function (reaction, user) {
 		const newTicket = await reaction.message.guild.channels.create(`${user.username}'s ticket`, { type: "GUILD_TEXT", });
 		await newTicket.setParent(TicketChannelCat);
 		await newTicket.permissionOverwrites.set(exampleChannel.permissionOverwrites.cache)
+		await newChannel.permissionOverwrites.create(reaction.message.guildId, { VIEW_CHANNEL: false })
 		await newTicket.permissionOverwrites.create(user.id, { VIEW_CHANNEL: true });
 		await reaction.message.guild.members.fetch().then((members) =>
 			members.forEach((member) => {if (member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {newTicket.permissionOverwrites.create(member.user.id, { VIEW_CHANNEL: true });}}),
