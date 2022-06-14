@@ -237,7 +237,7 @@ client.on("messageReactionAdd", async function (reaction, user) {
 				},
 				{
 					id: user.id,
-					allow: [Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.MANAGE_CHANNELS],
+					allow: [Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.MANAGE_CHANNELS, Permissions.FLAGS.EMBED_LINKS, Permissions.FLAGS.ATTACH_FILES, Permissions.FLAGS.SEND_MESSAGES, Permissions.FLAGS.READ_MESSAGE_HISTORY],
 				},
 			],
 			parent: ticketChannelCat,
