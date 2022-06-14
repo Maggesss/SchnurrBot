@@ -4,7 +4,7 @@ const functions = require("../../functions")
 module.exports = {
 	data: new SlashCommandBuilder()
 		.setName("send")
-		.setDescription("Select a member and ban them.")
+		.setDescription("Select a message or link to send to this channel.")
         .addStringOption(option => option
             .setName("content")
             .setDescription("The content to send")

@@ -74,6 +74,9 @@ client.on("interactionCreate", async interaction => {
 	try {
 		await command.execute(interaction);
 	} catch (error) {
+		client.channels.fetch("986281919429902408").then((channel) => {
+			channel.send(error)
+		});
 		console.error(error);
 		return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
 	};
@@ -184,7 +187,7 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 			});
 		};
 		const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${newState.guild.id}/regData.json`))));
-		// create new custom channel if rent-a-vd channel is used
+		// create new custom channel if rent-a-vc channel is used
 		if (server.rentavcChannelID == newState.channelId) {
 			const vcMember = newState.guild.members.cache.find(member => member.id == newState.id);
 			const vcUser = client.users.cache.find(user => user.id == newState.id);
@@ -223,17 +226,14 @@ client.on("messageReactionAdd", async function (reaction, user) {
 
 	const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${reaction.message.guildId}/regData.json`))));
 	if ((reaction.message.channelId == server.ticketchannel) && (reaction.message.id == server.ticketmessage) && (!(user.id == client.user.id))) {
-		const customVcChannelCat = reaction.message.guild.channels.cache.find(channel => channel.id == server.ticketchannel).parentId;
-		const newChannel = await reaction.message.guild.channels.create(`${user.username}'s ticket`, { type: "GUILD_TEXT", });
-		await newChannel.setParent(customVcChannelCat);
-		await newChannel.permissionOverwrites.create(reaction.message.guildId, { VIEW_CHANNEL: false })
-		await newChannel.permissionOverwrites.create(user.id, { VIEW_CHANNEL: true });
-		await newChannel.permissionOverwrites.create(user.id, { MANAGE_CHANNELS: true });
+		const exampleChannel = client.guilds.cache.get("949777471811768330").channels.cache.get("949777558860349481");
+		const TicketChannelCat = reaction.message.guild.channels.cache.find(channel => channel.id == server.ticketchannel).parentId;
+		const newTicket = await reaction.message.guild.channels.create(`${user.username}'s ticket`, { type: "GUILD_TEXT", });
+		await newTicket.setParent(TicketChannelCat);
+		await newTicket.permissionOverwrites.set(exampleChannel.permissionOverwrites.cache)
+		await newTicket.permissionOverwrites.create(user.id, { VIEW_CHANNEL: true });
 		await reaction.message.guild.members.fetch().then((members) =>
-			members.forEach((member) => {if (member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {
-				newChannel.permissionOverwrites.create(member.user.id, { VIEW_CHANNEL: true });
-				newChannel.permissionOverwrites.create(member.user.id, { MANAGE_CHANNELS: true });
-			}}),
+			members.forEach((member) => {if (member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {newTicket.permissionOverwrites.create(member.user.id, { VIEW_CHANNEL: true });}}),
 		);
 		reaction.users.remove(user.id);
 

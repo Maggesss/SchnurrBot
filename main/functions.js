@@ -15,4 +15,13 @@ function isHelper(id) {
     } else { return false; };
 };
 
-module.exports = { getRandomIntInclusive, isHelper}
+function isInt(probe) {
+    try {
+        probe = parseInt(probe)
+        return true
+    } catch {
+        return false
+    }
+}
+
+module.exports = { getRandomIntInclusive, isHelper, isInt}
