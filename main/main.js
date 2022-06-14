@@ -226,15 +226,27 @@ client.on("messageReactionAdd", async function (reaction, user) {
 
 	const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${reaction.message.guildId}/regData.json`))));
 	if ((reaction.message.channelId == server.ticketchannel) && (reaction.message.id == server.ticketmessage) && (!(user.id == client.user.id))) {
-		const exampleChannel = client.guilds.cache.get("949777471811768330").channels.cache.get("986285340576841778");
-		const TicketChannelCat = reaction.message.guild.channels.cache.find(channel => channel.id == server.ticketchannel).parentId;
-		const newTicket = await reaction.message.guild.channels.create(`${user.username}'s ticket`, { type: "GUILD_TEXT", });
-		await newTicket.setParent(TicketChannelCat);
-		await newTicket.permissionOverwrites.set(exampleChannel.permissionOverwrites.cache)
-		await newChannel.permissionOverwrites.create(reaction.message.guildId, { VIEW_CHANNEL: false })
-		await newTicket.permissionOverwrites.create(user.id, { VIEW_CHANNEL: true });
+		const ticketChannelCat = reaction.message.guild.channels.cache.find(channel => channel.id == server.ticketchannel).parentId;
+
+		const newTicket = await reaction.message.guild.channels.create(`${user.username}'s ticket`, {
+			type: 'GUILD_TEXT',
+			permissionOverwrites: [
+				{
+					id: reaction.message.guildId,
+					deny: [Permissions.FLAGS.VIEW_CHANNEL],
+				},
+				{
+					id: user.id,
+					allow: [Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.MANAGE_CHANNELS],
+				},
+			],
+			parent: ticketChannelCat,
+		});
+
 		await reaction.message.guild.members.fetch().then((members) =>
-			members.forEach((member) => {if (member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {newTicket.permissionOverwrites.create(member.user.id, { VIEW_CHANNEL: true });}}),
+			members.forEach((member) => { if ((!(member.user.bot)) && member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES) && (!(member.user.id == user.id))) {
+				newTicket.permissionOverwrites.create(member.user.id, { VIEW_CHANNEL: true, MANAGE_CHANNELS: true});
+			}}),
 		);
 		reaction.users.remove(user.id);
 
