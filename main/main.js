@@ -19,6 +19,13 @@ const respWordlist= ["Hi :D",
 //Setup & load commands
 const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_VOICE_STATES"], partials: ['MESSAGE', 'CHANNEL', 'REACTION']});
 
+client.player = new Player(client, {
+    ytdlOptions: {
+        quality: "highestaudio",
+        highWaterMark: 1 << 25
+    }
+});
+
 client.commands = new Collection();
 
 const rest = new REST({ version: "9" }).setToken(token);

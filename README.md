@@ -1,9 +1,4 @@
 # Readme is useless for this project since it's private, I guess~
-wip:
-1. Music commands
-2. Birthday Calendar
-3. Selfroles
-4. some sectret fun stuff
 
 anyway:
 This is just a bot-user for Discord.
