@@ -8,6 +8,7 @@ const customVC = require("./source/server/rentavc/index");
 const functions = require("./functions.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
+const { Player } = require("discord-player")
 
 //Random responses
 const respWordlist= ["Hi :D",
