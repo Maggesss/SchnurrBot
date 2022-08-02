@@ -1,14 +1,14 @@
 {
   "dependencies": {
     "@discordjs/builders": "^0.11.0",
-    "@discordjs/opus": "^0.5.3",
+    "@discordjs/opus": "^0.8.0",
     "@discordjs/rest": "^0.2.0-canary.0",
     "@discordjs/voice": "^0.8.0",
     "async": "^3.2.3",
     "axios": "^0.25.0",
     "discord-api-types": "^0.26.1",
     "discord-player": "^5.2.2",
-    "discord.js": "^13.6.0",
+    "discord.js": "^13.8.1",
     "libsodium-wrappers": "^0.7.9"
   }
 }
