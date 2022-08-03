@@ -1,5 +1,5 @@
-data/user/
-data/server/
-data/bothelper/
-data/playlist/
+data/user/*
+data/server/*
+data/bothelper/*
+data/playlist/*
 config.json
