@@ -1,4 +1,7 @@
 data/user/*
+!data/user/.gitkeep
 data/server/*
+!data/user/.gitkeep
 data/bothelper/*
+!data/user/gitkeep
 config.json
