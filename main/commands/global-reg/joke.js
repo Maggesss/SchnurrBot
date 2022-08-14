@@ -1,6 +1,5 @@
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const fetch = require("node-fetch");
-const { tenorKey } = require("../../config.json")
 
 module.exports = {
 	data: new SlashCommandBuilder()
