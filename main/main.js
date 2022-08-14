@@ -8,7 +8,7 @@ const customVC = require("./source/server/rentavc/index");
 const functions = require("./functions.js");
 const { REST } = require("@discordjs/rest");
 const { Routes } = require("discord-api-types/v9");
-const { Player } = require("discord-player")
+const { Player } = require("discord-player");
 
 //Random responses
 const respWordlist= ["Hi :D",
@@ -20,14 +20,14 @@ const respWordlist= ["Hi :D",
 //Setup & load commands
 const client = new Client({ intents: ["GUILD_MEMBERS", "GUILD_PRESENCES", "GUILDS", "GUILD_MESSAGES", "DIRECT_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILD_VOICE_STATES"], partials: ['MESSAGE', 'CHANNEL', 'REACTION']});
 
+client.commands = new Collection();
+
 client.player = new Player(client, {
     ytdlOptions: {
         quality: "highestaudio",
         highWaterMark: 1 << 25
     }
 });
-
-client.commands = new Collection();
 
 const rest = new REST({ version: "9" }).setToken(token);
 
@@ -234,27 +234,14 @@ client.on("messageReactionAdd", async function (reaction, user) {
 
 	const server = new Server(JSON.parse(fs.readFileSync(path.resolve(`./data/server/${reaction.message.guildId}/regData.json`))));
 	if ((reaction.message.channelId == server.ticketchannel) && (reaction.message.id == server.ticketmessage) && (!(user.id == client.user.id))) {
-		const ticketChannelCat = reaction.message.guild.channels.cache.find(channel => channel.id == server.ticketchannel).parentId;
-
-		const newTicket = await reaction.message.guild.channels.create(`${user.username}'s ticket`, {
-			type: 'GUILD_TEXT',
-			permissionOverwrites: [
-				{
-					id: reaction.message.guildId,
-					deny: [Permissions.FLAGS.VIEW_CHANNEL],
-				},
-				{
-					id: user.id,
-					allow: [Permissions.FLAGS.VIEW_CHANNEL, Permissions.FLAGS.MANAGE_CHANNELS, Permissions.FLAGS.EMBED_LINKS, Permissions.FLAGS.ATTACH_FILES, Permissions.FLAGS.SEND_MESSAGES, Permissions.FLAGS.READ_MESSAGE_HISTORY],
-				},
-			],
-			parent: ticketChannelCat,
-		});
-
+		const exampleChannel = client.guilds.cache.get("949777471811768330").channels.cache.get("949777558860349481");
+		const TicketChannelCat = reaction.message.guild.channels.cache.find(channel => channel.id == server.ticketchannel).parentId;
+		const newTicket = await reaction.message.guild.channels.create(`${user.username}'s ticket`, { type: "GUILD_TEXT", });
+		await newTicket.setParent(TicketChannelCat);
+		await newTicket.permissionOverwrites.set(exampleChannel.permissionOverwrites.cache)
+		await newTicket.permissionOverwrites.create(user.id, { VIEW_CHANNEL: true });
 		await reaction.message.guild.members.fetch().then((members) =>
-			members.forEach((member) => { if ((!(member.user.bot)) && member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES) && (!(member.user.id == user.id))) {
-				newTicket.permissionOverwrites.create(member.user.id, { VIEW_CHANNEL: true, MANAGE_CHANNELS: true});
-			}}),
+			members.forEach((member) => {if (member.permissions.has(Permissions.FLAGS.MANAGE_MESSAGES)) {newTicket.permissionOverwrites.create(member.user.id, { VIEW_CHANNEL: true });}}),
 		);
 		reaction.users.remove(user.id);
 

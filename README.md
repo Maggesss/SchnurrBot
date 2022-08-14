@@ -1,12 +1,13 @@
-# Readme is useless for this project since it's private, I guess~
-
-anyway:
-This is just a bot-user for Discord.
+# Just some moustache-themed discord bot
 
 # Main goals:
-1. one bot for every use
-2. stay 100% free
-3. custom, server independent commands
+1. one bot to rule them all
+2. stay free and open source
+3. never write any sort of documentation to mess with people and future me
 
 
-config.json & serverdata / usedata excluded. (./data/server/... & .data/user/...)
+config.json with:
+    "clientId": "...",
+	"token": "...",
+	"tenorKey": "..."
+needed
