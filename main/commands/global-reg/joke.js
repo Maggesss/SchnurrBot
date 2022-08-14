@@ -8,13 +8,14 @@ module.exports = {
 		.setDescription("Get some random joke!"),
 
 	async execute(interaction) {
-		const term = await interaction.options.getString("type");
-        const member = interaction.options.getMember("target");
-
-        const url = `https://some-random-api.ml/joke`
-        const res = await fetch(url);
-        const result = await res.json();
-
-        return interaction.reply(result);
+		try {
+			const url = `https://some-random-api.ml/joke`
+			const res = await fetch(url);
+			const result = await res.json();
+			return interaction.reply(result.joke);
+		} catch (error) {
+            console.error(error);
+            return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
+        };
 	}
 };
