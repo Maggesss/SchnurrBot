@@ -42,6 +42,8 @@ module.exports = {
 
             let embed = new MessageEmbed();
 
+            embed.setDescription(`Oops, something went wrong.`)
+
             if (interaction.options.getSubcommand() === "song") {
                 let url = interaction.options.getString("url");
                 
@@ -56,8 +58,7 @@ module.exports = {
 
                 const song = result.tracks[0];
                 await queue.addTrack(song);
-                embed
-                    .setDescription(`**[${song.title}](${song.url})** has been added to the Queue`)
+                embed.setDescription(`**[${song.title}](${song.url})** has been added to the Queue`)
                     .setThumbnail(song.thumbnail)
                     .setFooter({ text: `Duration: ${song.duration}`});
             } else if (interaction.options.getSubcommand() === "playlist") {
@@ -74,8 +75,7 @@ module.exports = {
                 
                 const playlist = result.playlist;
                 await queue.addTracks(result.tracks);
-                embed
-                    .setDescription(`**${result.tracks.length} songs from [${playlist.title}](${playlist.url})** have been added to the Queue`)
+                embed.setDescription(`**${result.tracks.length} songs from [${playlist.title}](${playlist.url})** have been added to the Queue`)
 
             } else if (interaction.options.getSubcommand() === "search") {
 
@@ -86,13 +86,12 @@ module.exports = {
                 });
 
                 if (result.tracks.length === 0) {
-                    return interaction.editReply("No results");
+                    return interaction.reply("No results");
                 };
                 
                 const song = result.tracks[0];
                 await queue.addTrack(song);
-                embed
-                    .setDescription(`**[${song.title}](${song.url})** has been added to the Queue`)
+                embed.setDescription(`**[${song.title}](${song.url})** has been added to the Queue`)
                     .setThumbnail(song.thumbnail)
                     .setFooter({ text: `Duration: ${song.duration}`});
             };
