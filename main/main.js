@@ -85,8 +85,7 @@ client.on("interactionCreate", async interaction => {
 		client.channels.fetch("986281919429902408").then((channel) => {
 			channel.send(error)
 		});
-		console.error(error);
-		return interaction.reply({ content: "There was an error while executing this command!", ephemeral: true });
+		console.log(error);
 	};
 });
 
