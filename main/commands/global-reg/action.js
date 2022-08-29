@@ -8,7 +8,7 @@ module.exports = {
 		.setDescription("Do something!")
 		.addStringOption(option => option
             .setName("type")
-            .setDescription("Select the type of your suggestion.")
+            .setDescription("Select the type of your action.")
             .setRequired(true)
             .addChoice("kiss", "kiss")
             .addChoice("kick", "kick")
@@ -19,7 +19,7 @@ module.exports = {
             .addChoice("cry", "cry")
             .addChoice("poke", "poke")
             .addChoice("lick", "lick")
-            .addChoice("fuck", "fuck"))
+            .addChoice("tickle", "tickle"))
         .addUserOption(option => option
             .setName("target")
             .setDescription("The member of your choice")
