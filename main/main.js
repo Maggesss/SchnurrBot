@@ -199,7 +199,11 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 			const vcMember = newState.guild.members.cache.find(member => member.id == newState.id);
 			const vcUser = client.users.cache.find(user => user.id == newState.id);
 			const customVcChannelCat = newState.guild.channels.cache.find(channel => channel.id == server.rentavcChannelID).parentId;
-			const newChannel = await newState.guild.channels.create(`🔊 ${vcUser.username}'s channel`, { type: "GUILD_VOICE", });
+			let strippedUsername = vcUser.username;
+			if (vcUser.username.length > 20) {
+				let strippedUsername = vcUser.username.substring(0, 19);
+			};
+			const newChannel = await newState.guild.channels.create(`🔊 ${strippedUsername}'s channel`, { type: "GUILD_VOICE", });
 			await newChannel.setParent(customVcChannelCat);
 			await newChannel.permissionOverwrites.create(vcUser.id, { MANAGE_CHANNELS: true });
 			//move to channel
