@@ -13,6 +13,13 @@ module.exports = {
             .addChoice("paper", "paper")
             .addChoice("scissors", "scissors")),
             
+            /*
+            choice bot:
+            0 = rock
+            1 = paper
+            2 = scissors
+            */
+
 	async execute(interaction) {
 		const choice_user = interaction.options.getString("choice");
         const choice_bot = functions.getRandomIntInclusive(0, 2)
