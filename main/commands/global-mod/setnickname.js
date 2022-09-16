@@ -4,22 +4,25 @@ const functions = require("../../functions")
 
 module.exports = {
 	data: new SlashCommandBuilder()
-		.setName("kick")
-		.setDescription("Select a member and kick them.")
+		.setName("setnickname")
+		.setDescription("Select the member to rename.")
 		.addUserOption(option => option
             .setName("target")
-            .setDescription("The member to kick")
+            .setDescription("The member to rename")
+            .setRequired(true))
+        .addStringOption(option => option
+            .setName("nickname")
+            .setDescription("The new nickname")
             .setRequired(true)),
             
 	async execute(interaction) {
         try {
-            if (interaction.member.permissions.has(Permissions.FLAGS.KICK_MEMBERS) || (functions.isHelper(interaction.user.id) == true)) {
+            if (interaction.member.permissions.hashas(Permissions.FLAGS.CHANGE_NICKNAME) || (functions.isHelper(interaction.user.id) == true)) {
                 const user = interaction.options.getMember("target");
-                interaction.client.channels.fetch("950064195464986725").then((channel) => {
-                    interaction.reply({ content: `You kicked: \`\`${user.username}\`\``, ephemeral: true })
-                    channel.send(`\`\`${interaction.user.username}\`\` kicked: \`\`${user.user.username}\`\` on server: \`\`${interaction.guild.name}\`\``)
-                    return user.kick();
-                });
+                const nickname = interaction.options.getString("nickname");
+                interaction.guild.members.get(user.id).setNickname(nickname);
+                return interaction.reply({ content: "Sucessfully renamed member.", ephemeral: true });
+
             } else { return interaction.reply("You don't have permissions to do that!") };
         } catch (error) {
             console.error(error);
