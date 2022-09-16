@@ -20,7 +20,7 @@ module.exports = {
             if (interaction.member.permissions.has(Permissions.FLAGS.CHANGE_NICKNAME) || (functions.isHelper(interaction.user.id) == true)) {
                 const user = interaction.options.getMember("target");
                 const nickname = interaction.options.getString("nickname");
-                interaction.guild.members.get(user.id).setNickname(nickname);
+                interaction.guild.members.cache.get(user.id).setNickname(nickname);
                 return interaction.reply({ content: "Sucessfully renamed member.", ephemeral: true });
 
             } else { return interaction.reply("You don't have permissions to do that!") };
