@@ -18,6 +18,7 @@ module.exports = {
 	async execute(interaction) {
 		const emoji = interaction.options.getString("emoji");
         const type = interaction.options.getString("type");
+		
 		try { 
             return interaction.reply(`https://cdn.discordapp.com/emojis/${emoji.match(/\d+/)[0]}.${type}`);
         } catch (error) {
