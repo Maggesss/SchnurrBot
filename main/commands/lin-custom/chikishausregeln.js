@@ -7,7 +7,7 @@ module.exports = {
 		.setDescription("Gives you some information about this server.")
         .addStringOption(option => option
             .setName("regelnummer")
-            .setDescription("Select your rule. (Put number from 1 to 9")
+            .setDescription("Select your rule. (Put number from 1 to 9)")
             .setRequired(true)),
         
 	async execute(interaction) {
