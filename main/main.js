@@ -7,7 +7,7 @@ const Server = require("./source/server/index");
 const customVC = require("./source/server/rentavc/index");
 const functions = require("./functions.js");
 const { REST } = require("@discordjs/rest");
-const { Routes } = require("discord-api-types/v9");
+const { Routes, PresenceUpdateStatus } = require("discord-api-types/v9");
 const { Player } = require("discord-player");
 
 //Random responses
@@ -28,6 +28,16 @@ client.player = new Player(client, {
         highWaterMark: 1 << 25
     }
 });
+
+async function updateStatus() {
+	let counter = 0;
+    const guilds = client.guilds.cache.map(guild => `\n${guild.id}: ${guild.name}`);
+	for (x in guilds) {
+		counter += 1;
+	};
+	client.user.setPresence({ activities: [{ name: ` on ${counter} guilds. ` }], status: `online` });
+	await functions.delay(300000);
+}
 
 const rest = new REST({ version: "9" }).setToken(token);
 
@@ -51,7 +61,8 @@ client.once("ready", () => {
 	client.channels.fetch("957431154158489670").then((channel) => {
 		channel.send(`Ready!\n${guilds}\n\nBot is currently in ${counter} guilds.\n`)
 	});
-	client.user.setPresence({ activities: [{ name: ` on ${counter} guilds. ` }], status: `online` });
+	//update status
+	updateStatus()
 });
 
 //command listener
@@ -128,7 +139,6 @@ client.on("messageCreate", (message) => {
 	//create userfile => no more afk
 	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
 });
-
 
 //join guild listener
 client.on("guildCreate", async function (guild) {

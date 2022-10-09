@@ -17,11 +17,17 @@ function isHelper(id) {
 
 function isInt(probe) {
     try {
-        probe = parseInt(probe)
-        return true
+        probe = parseInt(probe);
+        return true;
     } catch {
-        return false
-    }
-}
+        return false;
+    };
+};
 
-module.exports = { getRandomIntInclusive, isHelper, isInt}
+function delay(milisec) {
+    return new Promise(resolve => {
+        setTimeout(() => { resolve(""), milisec });
+    });
+};
+
+module.exports = { getRandomIntInclusive, isHelper, isInt, delay}
