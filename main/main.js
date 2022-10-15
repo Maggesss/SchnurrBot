@@ -37,6 +37,7 @@ async function updateStatus() {
 	};
 	client.user.setPresence({ activities: [{ name: ` on ${counter} guilds. ` }], status: `online` });
 	await functions.delay(300000);
+	updateStatus()
 }
 
 const rest = new REST({ version: "9" }).setToken(token);
