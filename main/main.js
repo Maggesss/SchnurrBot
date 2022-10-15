@@ -169,13 +169,6 @@ client.on("guildCreate", async function (guild) {
 			});
 			fs.writeFileSync(path.resolve(`./data/server/${guild.id}/regData.json`), new Server({ id: guild.id, name: guild.name }).toString());
 		};
-		//update status
-		let counter = 0;
-		const guilds = client.guilds.cache.map(guild => `\n${guild.id}: ${guild.name}`);
-		for (x in guilds) {
-			counter += 1;
-		};
-		client.user.setPresence({ activities: [{ name: ` on ${counter} guilds. ` }], status: `online` });
 	} catch(error) {
 		console.log(error)
 	};
