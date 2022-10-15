@@ -7,7 +7,7 @@ const Server = require("./source/server/index");
 const customVC = require("./source/server/rentavc/index");
 const functions = require("./functions.js");
 const { REST } = require("@discordjs/rest");
-const { Routes, PresenceUpdateStatus } = require("discord-api-types/v9");
+const { Routes } = require("discord-api-types/v9");
 const { Player } = require("discord-player");
 
 //Random responses
@@ -62,7 +62,7 @@ client.once("ready", () => {
 		channel.send(`Ready!\n${guilds}\n\nBot is currently in ${counter} guilds.\n`)
 	});
 	//update status
-	updateStatus()
+	updateStatus();
 });
 
 //command listener
@@ -72,14 +72,14 @@ client.on("interactionCreate", async interaction => {
 	if(!fs.existsSync(path.resolve(`./data/user/${interaction.user.id}.json`))) {
 		fs.writeFileSync(path.resolve(`./data/user/${interaction.user.id}.json`), new User({ id: interaction.user.id, name: interaction.user.tag }).toString());
 	};
-
+	//create server folder if not already exists	
 	if (!fs.existsSync(`./data/server/${interaction.guild.id}`)) {
 		fs.mkdir(`./data/server/${interaction.guild.id}`, (err) => {
 			if (err) throw err;
 		});
 		fs.writeFileSync(path.resolve(`./data/server/${interaction.guild.id}/regData.json`), new Server({ id: interaction.guild.id, name: interaction.guild.name }).toString());
 	};
-
+	//create birthdays folder if not already exists
 	if (!fs.existsSync(`./data/server/${interaction.guild.id}/birthdays`)) {
 		fs.mkdir(`./data/server/${interaction.guild.id}/birthdays`, (err) => {
 			if (err) throw err;
@@ -93,9 +93,6 @@ client.on("interactionCreate", async interaction => {
 	try {
 		await command.execute(interaction);
 	} catch (error) {
-		client.channels.fetch("986281919429902408").then((channel) => {
-			channel.send(error)
-		});
 		console.log(error);
 	};
 });
@@ -103,7 +100,7 @@ client.on("interactionCreate", async interaction => {
 //message listener
 client.on("messageCreate", (message) => {
 
-    if (message.author.bot) {return};
+    if (message.author.bot) { return };
 
     const attachment = message.attachments.first();
 
@@ -136,46 +133,51 @@ client.on("messageCreate", (message) => {
 			};
 		};
 	}
-	//create userfile => no more afk
+	//update userfile => no more afk
 	fs.writeFileSync(path.resolve(`./data/user/${message.author.id}.json`), new User({ id: message.author.id, name: message.author.tag }).toString());
 });
 
+
 //join guild listener
 client.on("guildCreate", async function (guild) {
-	//list basic commands
-	let standartCommands = [];
+	try {
+		//list basic commands
+		let standartCommands = [];
 
-	for (const dir of commandFolders) {
-		if (dir.startsWith("global") == true) {
-			const standartCommandFiles = fs.readdirSync(`commands/${dir}`).filter(file => file.endsWith(".js"));
+		for (const dir of commandFolders) {
+			if (dir.startsWith("global") == true) {
+				const standartCommandFiles = fs.readdirSync(`commands/${dir}`).filter(file => file.endsWith(".js"));
 
-			for (const file of standartCommandFiles) {
-				const standartCommand = require(`./commands/${dir}/${file}`);
-				standartCommands.push(standartCommand.data.toJSON());
+				for (const file of standartCommandFiles) {
+					const standartCommand = require(`./commands/${dir}/${file}`);
+					standartCommands.push(standartCommand.data.toJSON());
+				};
 			};
 		};
-	};
-	//deploy basic commands
-	rest.put(Routes.applicationGuildCommands(clientId, guild.id), { body: standartCommands })
-			.then(() => 
-			client.channels.fetch("950064195464986725").then((channel) => {
-				channel.send(`Successfully registered standart application commands for guild: \`\`${guild.name}\`\``)
-			.catch(console.error)}))
+		//deploy basic commands
+		await rest.put(Routes.applicationGuildCommands(clientId, guild.id), { body: standartCommands })
+				.then(() => 
+				client.channels.fetch("950064195464986725").then((channel) => {
+					channel.send(`Successfully registered standart application commands for guild: \`\`${guild.name}\`\``)
+				.catch(console.error)}))
 
-	//create server folder if not already exists
-	if (!fs.existsSync(`./data/server/${guild.id}`)) {
-		fs.mkdir(`./data/server/${guild.id}`, (err) => {
-			if (err) throw err;
-		});
-		fs.writeFileSync(path.resolve(`./data/server/${guild.id}/regData.json`), new Server({ id: guild.id, name: guild.name }).toString());
+		//create server folder if not already exists
+		if (!fs.existsSync(`./data/server/${guild.id}`)) {
+			fs.mkdir(`./data/server/${guild.id}`, (err) => {
+				if (err) throw err;
+			});
+			fs.writeFileSync(path.resolve(`./data/server/${guild.id}/regData.json`), new Server({ id: guild.id, name: guild.name }).toString());
+		};
+		//update status
+		let counter = 0;
+		const guilds = client.guilds.cache.map(guild => `\n${guild.id}: ${guild.name}`);
+		for (x in guilds) {
+			counter += 1;
+		};
+		client.user.setPresence({ activities: [{ name: ` on ${counter} guilds. ` }], status: `online` });
+	} catch(error) {
+		console.log(error)
 	};
-	//update status
-	let counter = 0;
-    const guilds = client.guilds.cache.map(guild => `\n${guild.id}: ${guild.name}`);
-	for (x in guilds) {
-		counter += 1;
-	};
-	client.user.setPresence({ activities: [{ name: ` on ${counter} guilds. ` }], status: `online` });
 });
 
 //listen to channel deletions
@@ -211,7 +213,7 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 			const customVcChannelCat = newState.guild.channels.cache.find(channel => channel.id == server.rentavcChannelID).parentId;
 			let strippedUsername = vcUser.username;
 			if (vcUser.username.length > 20) {
-				let strippedUsername = vcUser.username.substring(0, 19);
+				strippedUsername = vcUser.username.substring(0, 19);
 			};
 			const newChannel = await newState.guild.channels.create(`🔊 ${strippedUsername}'s channel`, { type: "GUILD_VOICE", });
 			await newChannel.setParent(customVcChannelCat);
@@ -264,5 +266,13 @@ client.on("messageReactionAdd", async function (reaction, user) {
 		});
 	};
 });
+
+client.on("inviteCreate", async function (invite, member) {
+		
+})
+
+client.on("guildMemberAdd", async function (member) {
+
+})
 
 client.login(token);
