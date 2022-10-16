@@ -36,8 +36,6 @@ async function updateStatus() {
 		counter += 1;
 	};
 	client.user.setPresence({ activities: [{ name: ` on ${counter} guilds. ` }], status: `online` });
-	await functions.delay(300000);
-	updateStatus();
 };
 
 const rest = new REST({ version: "9" }).setToken(token);
@@ -62,8 +60,10 @@ client.once("ready", () => {
 	client.channels.fetch("957431154158489670").then((channel) => {
 		channel.send(`Ready!\n${guilds}\n\nBot is currently in ${counter} guilds.\n`)
 	});
-	//update status
-	updateStatus();
+	//update status every 5min
+	setInterval(() => {
+        updateStatus();
+      }, 300000);
 });
 
 //command listener
