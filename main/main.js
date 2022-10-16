@@ -63,7 +63,7 @@ client.once("ready", () => {
 	//update status every 5min
 	setInterval(() => {
         updateStatus();
-      }, 300000);
+    }, 300000);
 });
 
 //command listener
