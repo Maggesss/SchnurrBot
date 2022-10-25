@@ -213,7 +213,11 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 			await newChannel.setParent(customVcChannelCat);
 			await newChannel.permissionOverwrites.create(vcUser.id, { MANAGE_CHANNELS: true });
 			//move to channel
-			vcMember.voice.setChannel(newChannel);
+			try {
+				vcMember.voice.setChannel(newChannel);
+			} catch(error) {
+				console.log(error);
+			};
 			//create new channels' .json file
 			fs.writeFileSync(path.resolve(`data/server/${newState.guild.id}/customVCs/${newChannel.id}.json`), new customVC({ id: newChannel.id, owner: vcUser.username }).toString());
 		} else {
@@ -221,7 +225,11 @@ client.on("voiceStateUpdate", async function (oldState, newState) {
 			let dir = fs.readdirSync(`./data/server/${oldState.guild.id}/customVCs`);
 			for (const file of dir) {
 				if ((file == `${oldState.channelId}.json`) && (oldState.channel.members.size == 0) && (oldState.channelId != null)) {
-					oldState.channel.delete();
+					try {
+						oldState.channel.delete();
+					} catch(error) { 
+						console.log(error);
+					};
 					fs.unlinkSync(`./data/server/${oldState.guild.id}/customVCs/${oldState.channelId}.json`);
 				};
 			};
