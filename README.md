@@ -11,3 +11,5 @@ config.json with:
 	"token": "...",
 	"tenorKey": "..."
 needed
+
+warning: old and buggy af
